@@ -1,0 +1,7 @@
+
+*.cache
+
+obj
+.vs
+Publish
+Bin
