@@ -188,6 +188,7 @@
             this.icon.Text = "Minecraft_Server_QQ";
             this.icon.Visible = true;
             this.icon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.APP_MouseDoubleClick);
+            this.icon.Icon = Properties.Resources.Color_yr;
             // 
             // app_menu
             // 
