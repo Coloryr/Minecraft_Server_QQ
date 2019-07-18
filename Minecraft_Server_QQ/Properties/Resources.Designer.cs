@@ -59,5 +59,15 @@ namespace Minecraft_Server_QQ.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon Color_yr {
+            get {
+                object obj = ResourceManager.GetObject("Color_yr", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

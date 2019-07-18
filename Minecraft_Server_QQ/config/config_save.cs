@@ -22,11 +22,6 @@ namespace Minecraft_Server_QQ
         public string server_arg = "nogui";
 
         /// <summary>
-        /// 服务器状态
-        /// </summary>
-        public int server_now = 0;
-
-        /// <summary>
         /// JAVA路径
         /// </summary>
         public string java_local;

@@ -21,11 +21,11 @@ namespace Minecraft_Server_QQ
             internal Int64 ullAvailExtendedVirtual;
         }
         [DllImport("kernel32.dll ")]      
-        static extern void GlobalMemoryStatusEx(ref MEMORYSTATUS1 lpBuffer); 
+        public static extern void GlobalMemoryStatusEx(ref MEMORYSTATUS1 lpBuffer); 
         [DllImport("kernel32",EntryPoint = "GetPrivateProfileString")]
-        static extern int API_GetPrivateProfileString(string lpApplicationName,string lpKeyName,string lpDefault,StringBuilder lpReturnedString,int nSize,string lpFileName);
+        public static extern int API_GetPrivateProfileString(string lpApplicationName,string lpKeyName,string lpDefault,StringBuilder lpReturnedString,int nSize,string lpFileName);
         [DllImport("kernel32",EntryPoint = "WritePrivateProfileString")]
-        static extern bool API_WritePrivateProfileString(string lpApplicationName,string lpKeyName,string lpString,string lpFileName);
+        public static extern bool API_WritePrivateProfileString(string lpApplicationName,string lpKeyName,string lpString,string lpFileName);
 
         #endregion
         //读取ini配置文件中的配置项，要求目标ini文件采用Unicode编码，如果遇到\\n会自动转换为\n

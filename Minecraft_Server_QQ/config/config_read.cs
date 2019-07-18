@@ -28,7 +28,7 @@ namespace Minecraft_Server_QQ
                 XmlNode open_start = xn.SelectSingleNode("开软件启动");
                 XmlNode max_m = xn.SelectSingleNode("最大内存");
                 XmlNode min_m = xn.SelectSingleNode("最小内存");
-                if (server_name != null && server_core !=null && server_local != null 
+                if (server_name != null && server_core != null && server_local != null
                     && server_arg != null && java_local != null)
                 {
                     server_save server = new server_save();
@@ -36,12 +36,14 @@ namespace Minecraft_Server_QQ
                     {
                         server.server_name = server_name.InnerXml;
                         server.server_local = server_local.InnerXml;
-                        server.server_core = server_local.InnerXml;
-                        server.server_arg = server_local.InnerXml;
+                        server.server_core = server_core.InnerXml;
+                        server.server_arg = server_arg.InnerXml;
                         server.java_local = java_local.InnerXml;
                         server.java_arg = java_arg.InnerXml;
                         server.auto_restart = auto_restart.InnerText == "开" ? true : false;
                         server.open_start = open_start.InnerText == "开" ? true : false;
+                        int.TryParse(max_m.InnerText, out server.max_m);
+                        int.TryParse(min_m.InnerText, out server.min_m);
                         config_file.server_list.Add(server.server_name, server);
                     }
                 }

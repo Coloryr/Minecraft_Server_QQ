@@ -5,6 +5,8 @@ namespace Minecraft_Server_QQ
 {
     class Start
     {
+        public static bool updata = false;
+        public static bool is_close = false;
         public static string APP_local = AppDomain.CurrentDomain.BaseDirectory;
         public void Start_APP()
         {
@@ -13,6 +15,7 @@ namespace Minecraft_Server_QQ
                 XML.CreateFile(APP_local + config_file.server, 0);
             config_read config = new config_read();
             config.read_server(APP_local + config_file.server);
+            updata = true;
         }
     }
 }

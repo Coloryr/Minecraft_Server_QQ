@@ -5,52 +5,26 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using static Minecraft_Server_QQ.WinAPI;
 
 namespace Minecraft_Server_QQ
 {
     partial class Window_Main : Form
     {
         private server_save server_save;
+        private bool plugins_run = false;
+        private bool mods_run = false;
 
-        private void safe_opPluginsList(object sender,object e)
-        {
-            if (sender == null)
-                listView_plugins.Items.Clear();
-            else
-            {
-                string[] Arr = (string[])sender;
-                ListViewItem item = new ListViewItem(new string[] { Arr[0], Arr[1], Arr[2], Arr[3] });
-                listView_plugins.Items.Add(item);
-            }
-        }//插件列表操作函数，用于多线程下的插件列表增加数据
-        private void safe_opModsList(object sender,object e)
-        {
-            if (sender == null)
-                listView_mods.Items.Clear();
-            else
-            {
-                string[] Arr = (string[])sender;
-                ListViewItem item = new ListViewItem(new string[] { Arr[0], Arr[1], Arr[2], Arr[3] });
-                listView_mods.Items.Add(item);
-            }
-        }//同上
         private void safe_opButton(object sender,object var) 
         {
             Button button = (Button)sender;
             bool enabled = (bool)var;
             button.Enabled = enabled;
         }//用于多线程下的按钮Enabled属性操作
-        private void safe_opToolStripStatusLabel(object sender, object var) 
-        {
-            ToolStripStatusLabel s = (ToolStripStatusLabel)sender;
-            s.Text = "状态: " + (string)var;
-        }//同上，用于状态条
-
         private void th_showInfo() 
         {
 
         }//显示信息线程，用于显示包括版本信息，开服后的内存信息等，并且负责软件开启后自动更新DNS 
-
         public Window_Main(server_save server)
         {
             this.server_save = server;
@@ -59,15 +33,36 @@ namespace Minecraft_Server_QQ
         //窗口初始化事件
         private void Window_Main_Load(object sender, EventArgs e)
         {
-            server_save.Server = new MCServer(server_save.server_local);
-            server_save.Server.serverMessage += new MCServer.serverEventHandler(Server_serverMessage);
-            server_save.Server.serverRestart += new MCServer.serverEventHandler(Server_serverRestart);
-            server_save.Server.serverStop += new MCServer.serverEventHandler(Server_serverStop);
-            server_save.Task_list = new MCSTask(server_save.Server,Application.StartupPath);
-            server_save.Task_list.ptask += new MCSTask.pTask(Task_ptask);
-            server_save.Task_list.InitTask();
-            server_save.Task_list.StartTask();
-            new Thread(th_showInfo).Start();
+            if (server_save.Server == null)
+            {
+                server_save.Server = new MCServer(server_save.server_local);
+                server_save.Server.serverMessage += new MCServer.serverEventHandler(Server_serverMessage);
+                server_save.Server.serverRestart += new MCServer.serverEventHandler(Server_serverRestart);
+                server_save.Server.serverStop += new MCServer.serverEventHandler(Server_serverStop);
+                server_save.Task_list = new MCSTask(server_save.Server, Application.StartupPath);
+                server_save.Task_list.ptask += new MCSTask.pTask(Task_ptask);
+                server_save.Task_list.InitTask();
+                server_save.Task_list.StartTask();
+                new Thread(th_showInfo).Start();
+            }
+            Name = server_save.server_name + "监视窗口";
+            MEMORYSTATUS1 vBuffer = new MEMORYSTATUS1();//实例化结构  
+            vBuffer.dwLength = 64;
+            GlobalMemoryStatusEx(ref vBuffer);//给此结构赋值搜索            
+            long max_m = vBuffer.ullTotalPhys / 1024 / 1024;
+            java_max.Maximum = max_m;
+            java_min.Maximum = max_m;
+
+            server_name.Text = server_save.server_name;
+            server_local.Text = server_save.server_local;
+            server_core.Text = server_save.server_core;
+            server_arg.Text = server_save.server_arg;
+            java_local.Text = server_save.java_local;
+            java_arg.Text = server_save.java_arg;
+            java_min.Value = server_save.min_m;
+            java_max.Value = server_save.max_m;
+            auto_restart.Checked = server_save.auto_restart;
+            open_start.Checked = server_save.open_start;
         }
         //事件-计划任务应执行 
         void Task_ptask(int s)
@@ -91,6 +86,7 @@ namespace Minecraft_Server_QQ
                     Server_serverMessage(null, new Event.MCSEvent("[提示]服务器已正常关闭", 0));
                 else
                     Server_serverMessage(null, new Event.MCSEvent("[提示]服务器已被强制关闭或崩溃", 0));
+                logs.Log_write(e.exitCode.ToString());
             }
         }
         //事件-服务器重启完毕
@@ -117,75 +113,65 @@ namespace Minecraft_Server_QQ
         //开启服务器按钮被点击
         private void button_serverRun_Click(object sender, EventArgs e)
         {
-            string configFile = Application.StartupPath + @"\config.ini";
-            if (!File.Exists(Application.StartupPath + @"\server\Start.jar"))
+            if (!File.Exists(server_save.server_local + server_save.server_core))
             {
                 MessageBox.Show("服务器核心未找到，请设置为Start.jar");
                 return;
             }
             //读取开服所需相关参数并检测，生成启动命令行
-            string javaPath = WinAPI.GetPrivateProfileString(configFile, "config", "javaPath", "");
-            if (javaPath == "")
+            string javaPath = server_save.java_local;
+            if (string.IsNullOrWhiteSpace(javaPath) || !File.Exists(javaPath))
             {
-                //尝试自动搜索java.exe
-                javaPath = other.SeachJava();
-                if (javaPath != "")
-                    WinAPI.WritePrivateProfileString(configFile,"config","javaPath",javaPath);
-            }
-            if (!File.Exists(javaPath))
-            {
-                MessageBox.Show("Java路径无效！请在设置中手动设置Java路径。");
+                MessageBox.Show("JAVA错误，请重新设置");
                 return;
             }
             //创建eula.txt
             MCconfig config = new MCconfig();
-            config.Init(Application.StartupPath+@"\server\eula.txt");
-            config.SetString("eula","true");
-            config.UnInit(true);
-            //端口检测
-            config.Init(Application.StartupPath + @"\server\server.properties");
-            int Port ;
-            try { Port = int.Parse(config.GetString("server-port")); }
-            catch { Port = 25565; }
-            config.UnInit(false);
-            if (!other.PortInUse(Port))
+            if (!File.Exists(server_save.server_local + "eula.txt"))
             {
-                MessageBox.Show("服务器端口被占用！请关闭占用端口的进程或者重启电脑。");
-                return;
+                if (MessageBox.Show("EULA文件缺失，是否同意MOJANG EULA", "EULA", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    config.Init(server_save.server_local + "eula.txt");
+                    config.SetString("eula", "true");
+                    config.UnInit(true);
+                }
+                else
+                {
+                    MessageBox.Show("你需要同意开服协议才能开服。");
+                    return;
+                }
+            }
+            if (!File.Exists(server_save.server_local + "server.properties"))
+            {
+                //端口检测
+                config.Init(server_save.server_local + "server.properties");
+                int Port = 25565;
+                if (!other.PortInUse(Port))
+                {
+                    MessageBox.Show("服务器端口25565被占用！请关闭占用端口的进程或者重启。");
+                    return;
+                }
             }
             //根据配置文件生成相关参数
-            string cmd;
-            cmd = WinAPI.GetPrivateProfileString(configFile, "config", "javaParameter","");
-            int maxMemory;
-            try
+            if (server_save.max_m == 0 || server_save.min_m == 0)
             {
-                maxMemory = int.Parse(WinAPI.GetPrivateProfileString(configFile, "config", "MaxMemory", "0"));
-            }
-            catch { maxMemory = 0; }
-            string moreline = WinAPI.GetPrivateProfileString(configFile,"config","MoreLine","");
-            if (maxMemory != 0)
-            {
-                cmd = cmd + " -Xmx" + maxMemory.ToString() + "M -jar -Djline.terminal=jline.UnsupportedTerminal";
-            } else {
-                cmd = cmd + " -jar -Djline.terminal=jline.UnsupportedTerminal";
-            }
-            //采用相对路径，避免非中文系统下中文目录导致的开服失败。
-            cmd = cmd + " \"..\\server\\Start.jar\"";
-            if (moreline != "")
-                cmd = cmd + " " + moreline;
-            string serverType = WinAPI.GetPrivateProfileString(Application.StartupPath + @"\config.ini", "config", "ServerType", "0");
-            if (serverType == "2" || serverType == "3")
-                cmd = cmd + " nogui";
-            if (!server_save.Server.Run(javaPath,cmd))
-            {
-                MessageBox.Show("进程创建失败！");
-                Debug.WriteLine(javaPath);
+                MessageBox.Show("内存设置错误");
                 return;
             }
+            string cmd = string.Format("{0} -Xmx{1}M -Xms{2}M -Djline.terminal=jline.UnsupportedTerminal -jar \"{3}\" {4}",
+                server_save.java_arg, server_save.max_m.ToString(), server_save.min_m.ToString(),
+                server_save.server_local + server_save.server_core, server_save.server_arg);
+            //采用相对路径，避免非中文系统下中文目录导致的开服失败。
+            if (!server_save.Server.Run(javaPath, cmd))
+            {
+                MessageBox.Show("进程创建失败！");
+                return;
+            }
+            logs.Log_write("启动服务器：" + cmd);
             //进程创建成功
-            button_serverRun.Invoke(new server_save.opEventHandler(safe_opButton),new object[]{button_serverRun,false});
-            button_serverStop.Invoke(new server_save.opEventHandler(safe_opButton),new object[]{button_serverStop,true});
-            button_serverRest.Invoke(new server_save.opEventHandler(safe_opButton), new object[]{button_serverRest,true});
+            button_serverRun.Invoke(new server_save.opEventHandler(safe_opButton), new object[] { button_serverRun, false });
+            button_serverStop.Invoke(new server_save.opEventHandler(safe_opButton), new object[] { button_serverStop, true });
+            button_serverRest.Invoke(new server_save.opEventHandler(safe_opButton), new object[] { button_serverRest, true });
         }
         //关闭服务器
         private void button_serverStop_Click(object sender, EventArgs e)
@@ -195,7 +181,7 @@ namespace Minecraft_Server_QQ
         //重启服务器
         private void button_serverRest_Click(object sender, EventArgs e)
         {
-            if (!server_save.Server.IsRun())
+            if (server_save.Server.IsRun() == 0)
             {
                 MessageBox.Show("请先等待服务端运行后再重启");
                 return;
@@ -294,17 +280,6 @@ namespace Minecraft_Server_QQ
             }
             s[server_save.LINEMAX - 1] = null;
         }
-        //程序即将关闭
-        private void Window_Main_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (server_save.Server.IsProcessRun())
-            {
-                MessageBox.Show("请先关闭服务器再退出软件！");
-                e.Cancel = true;
-                return;
-            }
-            Environment.Exit(0);
-        }
         //选项卡被选择
         private void tabControl1_SelectingAsync(object sender, TabControlCancelEventArgs e)
         {
@@ -316,32 +291,39 @@ namespace Minecraft_Server_QQ
                     server.ReadMCServerConfig(server_save);
                 });
             }
-            else if (e.TabPage == tabPage_serverPlugin)
+            else if (e.TabPage == tabPage_serverPlugin && plugins_run == false)
             {
+                plugins_run = true;
                 plugins_mod plugins = new plugins_mod();
                 Task.Factory.StartNew(() =>
                 {
                     plugin_mod_list list = plugins.ReadPluginsInfo(server_save.server_local);
                     if (list != null)
                     {
-                        listView_plugins.Items.Clear();
-                        foreach (plugin_mod_save save in list.list)
+                        Action<int> action = (data) =>
                         {
-                            ListViewItem test = new ListViewItem(save.name);
-                            test.SubItems.Add(save.version);
-                            test.SubItems.Add(save.auth);
-                            test.SubItems.Add(save.file);
-                            listView_plugins.Items.Add(test);
-                        }
+                            listView_plugins.Items.Clear();
+                            foreach (plugin_mod_save save in list.list)
+                            {
+                                ListViewItem test = new ListViewItem(save.name);
+                                test.SubItems.Add(save.version);
+                                test.SubItems.Add(save.auth);
+                                test.SubItems.Add(save.file);
+                                listView_plugins.Items.Add(test);
+                            }
+                        };
+                        Invoke(action, 0);
                     }
+                    plugins_run = false;
                 });
             }
-            else if (e.TabPage == tabPage_serverMod)
+            else if (e.TabPage == tabPage_serverMod && mods_run == false)
             {
+                mods_run = true;
                 plugins_mod mod = new plugins_mod();
                 Task.Factory.StartNew(() =>
                 {
-                    plugin_mod_list list = mod.ReadPluginsInfo(server_save.server_local);
+                    plugin_mod_list list = mod.ReadModInfo(server_save.server_local);
                     if (list != null)
                     {
                         listView_plugins.Items.Clear();
@@ -354,6 +336,7 @@ namespace Minecraft_Server_QQ
                             listView_mods.Items.Add(test);
                         }
                     }
+                    mods_run = false;
                 });
             }
             else if (e.TabPage == tabPage_serverTask)
@@ -381,41 +364,72 @@ namespace Minecraft_Server_QQ
             else
                 MessageBox.Show("保存设置失败，请检查服务器设置文件是否被占用。");
         }
-        //自动搜索java
-        private void button_autoSeach_Click(object sender, EventArgs e)
-        {
-            string s = other.SeachJava();
-            if (s == "")
-            {
-                MessageBox.Show("程序未能自动搜索到java.exe所在位置，请手动选择。");
-                return;
-            } else {
-                textBox_javaPath.Text = s;
-                WinAPI.WritePrivateProfileString(Application.StartupPath+@"\config.ini","config","javaPath",s);
-            }
-        }
-        //手动选择java
-        private void button_select_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.FileName = "";
-            openFileDialog1.Filter = "java主程序|java.exe";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                textBox_javaPath.Text = openFileDialog1.FileName;
-                WinAPI.WritePrivateProfileString(Application.StartupPath + @"\config.ini", "config", "javaPath", openFileDialog1.FileName);
-            }
-        }
-        private void OpenFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-        private void GroupBox_41_Enter(object sender, EventArgs e)
-        {
-
-        }
         private void ListView_plugins_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(server_name.Text)
+                || string.IsNullOrWhiteSpace(server_local.Text)
+                || string.IsNullOrWhiteSpace(server_core.Text))
+            {
+                MessageBox.Show("参数缺少，请检查");
+                return;
+            }
+            string a = server_save.server_name;
+            server_save.server_name = server_name.Text;
+            server_save.server_local = server_local.Text;
+            server_save.server_core = server_core.Text;
+            server_save.server_arg = server_arg.Text;
+            server_save.java_local = java_local.Text;
+            server_save.java_arg = java_arg.Text;
+            server_save.min_m = (int)java_min.Value;
+            server_save.max_m = (int)java_max.Value;
+            server_save.auto_restart = auto_restart.Checked;
+            server_save.open_start = open_start.Checked;
+            config_write.write_server(Start.APP_local + config_file.server, server_save);
+            if (config_file.server_list.ContainsKey(a) == true)
+                config_file.server_list.Remove(a);
+            config_file.server_list.Add(server_save.server_name, server_save);
+            Start.updata = true;
+        }
+
+        private void Button_server_core_Click(object sender, EventArgs e)
+        {
+            server_local_core.ShowDialog();
+            if (string.IsNullOrWhiteSpace(server_local_core.FileName))
+            {
+                MessageBox.Show("错误的文件名，请重新选择");
+                return;
+            }
+            server_core.Text = server_local_core.SafeFileName;
+            server_local.Text = server_local_core.FileName.Replace(server_local_core.SafeFileName, "");
+        }
+
+        private void Button_java_Click(object sender, EventArgs e)
+        {
+            java_local_chose.ShowDialog();
+            if (string.IsNullOrWhiteSpace(java_local_chose.FileName))
+            {
+                MessageBox.Show("错误的文件名，请重新选择");
+                return;
+            }
+            java_local.Text = java_local_chose.FileName;
+        }
+
+        private void Button_java_auto_Click(object sender, EventArgs e)
+        {
+            string a = other.SeachJava();
+            if (string.IsNullOrWhiteSpace(a) == false)
+            {
+                java_local.Text = a;
+            }
+            else
+            {
+                MessageBox.Show("未找到JAVA");
+            }
         }
     }
 }

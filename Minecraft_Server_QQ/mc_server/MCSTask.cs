@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Minecraft_Server_QQ
 {
@@ -50,17 +51,23 @@ namespace Minecraft_Server_QQ
                 thread.Start();
             }
         }
+        public int StopTask()
+        {
+            if (thread != null && thread.IsAlive == true)
+                thread.Abort();
+            return 0;
+        }
         private void Th_AutoMessage() 
         {
             Server.SendMessage("say [提醒]服务器还有1分钟将自动重启...");
-            Thread.Sleep(50000);
+            Thread.Sleep(1000);
             Server.SendMessage("say [提醒]服务器将于10秒后自动重启");
         }//用于发送自动重启提示
         private void Th_Task()
         {
-            while (true)
+            while (Start.is_close == false)
             {
-                Thread.Sleep(60000);
+                Thread.Sleep(1000);
                 //读取任务配置文件中的内容，判断并执行
                 if (Directory.Exists(taskDir))
                 {
@@ -96,20 +103,17 @@ namespace Minecraft_Server_QQ
                                 {//关闭服务器
                                     if (!Server.IsProcessRun())
                                         continue;
-                                    if (ptask != null)
-                                        ptask(0);
+                                    ptask?.Invoke(0);
                                 }
                                 if (content == "1")
                                 {//开启服务器
                                     if (Server.IsProcessRun())
                                         continue;
-                                    if (ptask != null)
-                                        ptask(1);
+                                    ptask?.Invoke(1);
                                 }
                                 if (content == "2")
                                 {//重启服务器
-                                    if (ptask != null)
-                                        ptask(2);
+                                    ptask?.Invoke(2);
                                 }
                                 if (content == "3")
                                 {//备份地图

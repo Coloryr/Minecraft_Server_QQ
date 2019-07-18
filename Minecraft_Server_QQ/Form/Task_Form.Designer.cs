@@ -45,7 +45,7 @@
             this.Text = "Task";
             this.Load += new System.EventHandler(this.Task_Form_Load);
             this.ResumeLayout(false);
-
+            this.Icon = Properties.Resources.Color_yr;
         }
 
         #endregion

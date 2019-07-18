@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Add_Server));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button_server_local = new System.Windows.Forms.Button();
             this.button_server_core = new System.Windows.Forms.Button();
             this.server_core = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -38,10 +37,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.server_local = new System.Windows.Forms.TextBox();
-            this.servre_local_chose = new System.Windows.Forms.FolderBrowserDialog();
             this.label4 = new System.Windows.Forms.Label();
             this.server_name = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button_java_auto = new System.Windows.Forms.Button();
             this.java_max = new System.Windows.Forms.NumericUpDown();
             this.java_min = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
@@ -64,7 +63,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button_server_local);
             this.groupBox1.Controls.Add(this.button_server_core);
             this.groupBox1.Controls.Add(this.server_core);
             this.groupBox1.Controls.Add(this.label3);
@@ -78,16 +76,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器设置";
-            // 
-            // button_server_local
-            // 
-            this.button_server_local.Location = new System.Drawing.Point(154, 102);
-            this.button_server_local.Name = "button_server_local";
-            this.button_server_local.Size = new System.Drawing.Size(121, 24);
-            this.button_server_local.TabIndex = 7;
-            this.button_server_local.Text = "选择服务器根目录";
-            this.button_server_local.UseVisualStyleBackColor = true;
-            this.button_server_local.Click += new System.EventHandler(this.Button2_Click);
             // 
             // button_server_core
             // 
@@ -121,6 +109,7 @@
             this.server_arg.Name = "server_arg";
             this.server_arg.Size = new System.Drawing.Size(301, 21);
             this.server_arg.TabIndex = 3;
+            this.server_arg.Text = "nogui";
             // 
             // label2
             // 
@@ -147,10 +136,6 @@
             this.server_local.Size = new System.Drawing.Size(301, 21);
             this.server_local.TabIndex = 0;
             // 
-            // servre_local_chose
-            // 
-            this.servre_local_chose.Description = "服务器根目录";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -166,9 +151,11 @@
             this.server_name.Name = "server_name";
             this.server_name.Size = new System.Drawing.Size(333, 21);
             this.server_name.TabIndex = 8;
+            this.server_name.Text = "server1";
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button_java_auto);
             this.groupBox2.Controls.Add(this.java_max);
             this.groupBox2.Controls.Add(this.java_min);
             this.groupBox2.Controls.Add(this.label8);
@@ -184,6 +171,16 @@
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "JAVA设置";
+            // 
+            // button_java_auto
+            // 
+            this.button_java_auto.Location = new System.Drawing.Point(154, 103);
+            this.button_java_auto.Name = "button_java_auto";
+            this.button_java_auto.Size = new System.Drawing.Size(121, 24);
+            this.button_java_auto.TabIndex = 13;
+            this.button_java_auto.Text = "自动查找JAVA";
+            this.button_java_auto.UseVisualStyleBackColor = true;
+            this.button_java_auto.Click += new System.EventHandler(this.Button_java_auto_Click);
             // 
             // java_max
             // 
@@ -253,6 +250,7 @@
             this.java_arg.Name = "java_arg";
             this.java_arg.Size = new System.Drawing.Size(301, 21);
             this.java_arg.TabIndex = 3;
+            this.java_arg.Text = "-server";
             // 
             // label6
             // 
@@ -282,7 +280,6 @@
             // java_local_chose
             // 
             this.java_local_chose.DefaultExt = "exe";
-            this.java_local_chose.FileName = "JAVA.exe";
             this.java_local_chose.Filter = "(JAVA核心java.exe)|JAVA.exe";
             this.java_local_chose.Title = "选择JAVA.exe";
             // 
@@ -299,7 +296,6 @@
             // server_local_core
             // 
             this.server_local_core.DefaultExt = "jar";
-            this.server_local_core.FileName = "*.jar";
             this.server_local_core.Filter = "(服务器核心*.jar)|.jar";
             // 
             // auto_restart
@@ -349,7 +345,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.java_min)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
+            this.Icon = Properties.Resources.Color_yr;
         }
 
         #endregion
@@ -362,8 +358,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox server_core;
         private System.Windows.Forms.Button button_server_core;
-        private System.Windows.Forms.Button button_server_local;
-        private System.Windows.Forms.FolderBrowserDialog servre_local_chose;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox server_name;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -381,5 +375,6 @@
         private System.Windows.Forms.OpenFileDialog server_local_core;
         private System.Windows.Forms.CheckBox auto_restart;
         private System.Windows.Forms.CheckBox open_start;
+        private System.Windows.Forms.Button button_java_auto;
     }
 }

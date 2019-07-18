@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Minecraft_Server_QQ.WinAPI;
 
 namespace Minecraft_Server_QQ
 {
@@ -16,16 +17,6 @@ namespace Minecraft_Server_QQ
         public Add_Server()
         {
             InitializeComponent();
-        }
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            servre_local_chose.ShowDialog();
-            if (string.IsNullOrWhiteSpace(servre_local_chose.SelectedPath))
-            {
-                MessageBox.Show("错误的路径，请重新选择");
-                return;
-            }
-            server_local.Text = servre_local_chose.SelectedPath;
         }
 
         private void Button_java_Click(object sender, EventArgs e)
@@ -60,7 +51,7 @@ namespace Minecraft_Server_QQ
                 MessageBox.Show("参数缺少，请检查");
                 return;
             }
-            Dictionary<string,server_save>.ValueCollection temp = config_file.server_list.Values;
+            Dictionary<string, server_save>.ValueCollection temp = config_file.server_list.Values;
             foreach (server_save a in temp)
             {
                 if (a.server_name == server_name.Text)
@@ -80,7 +71,6 @@ namespace Minecraft_Server_QQ
                 server.server_name = server_name.Text;
                 server.server_local = server_local.Text;
                 server.server_core = server_core.Text;
-                server.server_now = 0;
                 server.java_local = java_local.Text;
                 server.java_arg = java_arg.Text;
                 server.auto_restart = auto_restart.Checked;
@@ -100,9 +90,25 @@ namespace Minecraft_Server_QQ
 
         private void Add_Server_Load(object sender, EventArgs e)
         {
-            long max_m = Process.GetCurrentProcess().PeakWorkingSet64 / 1024;
+            MEMORYSTATUS1 vBuffer = new MEMORYSTATUS1();//实例化结构  
+            vBuffer.dwLength = 64;
+            GlobalMemoryStatusEx(ref vBuffer);//给此结构赋值搜索            
+            long max_m = vBuffer.ullTotalPhys / 1024 / 1024;
             java_max.Maximum = max_m;
             java_min.Maximum = max_m;
+        }
+
+        private void Button_java_auto_Click(object sender, EventArgs e)
+        {
+            string a = other.SeachJava();
+            if (string.IsNullOrWhiteSpace(a) == false)
+            {
+                java_local.Text = a;
+            }
+            else
+            {
+                MessageBox.Show("未找到JAVA");
+            }
         }
     }
 }
