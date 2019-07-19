@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(APP));
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listServer = new System.Windows.Forms.ListView();
@@ -38,9 +37,7 @@
             this.server_core = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.java_arg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.server_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.open_server = new System.Windows.Forms.ToolStripMenuItem();
-            this.close_server = new System.Windows.Forms.ToolStripMenuItem();
-            this.restart_server = new System.Windows.Forms.ToolStripMenuItem();
+            this.delete_server = new System.Windows.Forms.ToolStripMenuItem();
             this.open_win = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -96,7 +93,7 @@
             this.listServer.TabIndex = 1;
             this.listServer.UseCompatibleStateImageBehavior = false;
             this.listServer.View = System.Windows.Forms.View.Details;
-            this.listServer.SelectedIndexChanged += new System.EventHandler(this.ListServer_SelectedIndexChanged);
+            this.listServer.DoubleClick += new System.EventHandler(this.Open_win_Click);
             // 
             // server_name
             // 
@@ -121,37 +118,24 @@
             // server_menu
             // 
             this.server_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.open_server,
-            this.close_server,
-            this.restart_server,
+            this.delete_server,
             this.open_win});
             this.server_menu.Name = "contextMenuStrip_tuopan";
-            this.server_menu.Size = new System.Drawing.Size(137, 92);
+            this.server_menu.Size = new System.Drawing.Size(137, 48);
             // 
-            // open_server
+            // delete_server
             // 
-            this.open_server.Name = "open_server";
-            this.open_server.Size = new System.Drawing.Size(136, 22);
-            this.open_server.Text = "开启服务器";
-            this.open_server.Click += new System.EventHandler(this.Open_server_Click);
-            // 
-            // close_server
-            // 
-            this.close_server.Name = "close_server";
-            this.close_server.Size = new System.Drawing.Size(136, 22);
-            this.close_server.Text = "关闭服务器";
-            // 
-            // restart_server
-            // 
-            this.restart_server.Name = "restart_server";
-            this.restart_server.Size = new System.Drawing.Size(136, 22);
-            this.restart_server.Text = "重启服务器";
+            this.delete_server.Name = "delete_server";
+            this.delete_server.Size = new System.Drawing.Size(136, 22);
+            this.delete_server.Text = "删除服务器";
+            this.delete_server.Click += new System.EventHandler(this.Delete_server_Click);
             // 
             // open_win
             // 
             this.open_win.Name = "open_win";
             this.open_win.Size = new System.Drawing.Size(136, 22);
             this.open_win.Text = "打开控制台";
+            this.open_win.Click += new System.EventHandler(this.Open_win_Click);
             // 
             // button1
             // 
@@ -184,11 +168,10 @@
             // icon
             // 
             this.icon.ContextMenuStrip = this.app_menu;
-            this.icon.Icon = ((System.Drawing.Icon)(resources.GetObject("icon.Icon")));
+            this.icon.Icon = global::Minecraft_Server_QQ.Properties.Resources.Color_yr;
             this.icon.Text = "Minecraft_Server_QQ";
             this.icon.Visible = true;
             this.icon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.APP_MouseDoubleClick);
-            this.icon.Icon = Properties.Resources.Color_yr;
             // 
             // app_menu
             // 
@@ -242,7 +225,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = global::Minecraft_Server_QQ.Properties.Resources.Color_yr;
             this.MaximizeBox = false;
             this.Name = "APP";
             this.Text = "Minecraft_Server_QQ";
@@ -254,7 +237,7 @@
             this.app_menu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.Icon = Properties.Resources.Color_yr;
+
         }
 
         #endregion
@@ -277,9 +260,7 @@
         private System.Windows.Forms.ToolStripMenuItem 关闭服务器并退出程序ToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader java_arg;
         private System.Windows.Forms.ContextMenuStrip server_menu;
-        private System.Windows.Forms.ToolStripMenuItem open_server;
-        private System.Windows.Forms.ToolStripMenuItem close_server;
-        private System.Windows.Forms.ToolStripMenuItem restart_server;
+        private System.Windows.Forms.ToolStripMenuItem delete_server;
         private System.Windows.Forms.ToolStripMenuItem open_win;
     }
 }

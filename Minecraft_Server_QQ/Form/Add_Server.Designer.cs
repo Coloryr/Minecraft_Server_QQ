@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Add_Server));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button_server_core = new System.Windows.Forms.Button();
             this.server_core = new System.Windows.Forms.TextBox();
@@ -296,7 +295,7 @@
             // server_local_core
             // 
             this.server_local_core.DefaultExt = "jar";
-            this.server_local_core.Filter = "(服务器核心*.jar)|.jar";
+            this.server_local_core.Filter = "(服务器核心)|*.jar";
             // 
             // auto_restart
             // 
@@ -331,7 +330,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = global::Minecraft_Server_QQ.Properties.Resources.Color_yr;
             this.MaximizeBox = false;
             this.Name = "Add_Server";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -345,7 +344,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.java_min)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.Icon = Properties.Resources.Color_yr;
+
         }
 
         #endregion

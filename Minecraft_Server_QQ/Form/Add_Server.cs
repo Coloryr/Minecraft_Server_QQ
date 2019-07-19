@@ -80,6 +80,7 @@ namespace Minecraft_Server_QQ
                 config_write.write_server(Start.APP_local + config_file.server, server);
                 config_file.server_list.Add(server.server_name, server);
                 MessageBox.Show("已添加");
+                Start.updata = true;
                 Close();
             }
             catch (Exception ex)

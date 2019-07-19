@@ -68,11 +68,10 @@ namespace Minecraft_Server_QQ
                 config.SetString("enable-rcon", "false");
                 config.UnInit(true);
             }
-            /*
+            
             //依次读取配置写到tmpObject对象里
-            #region 读取配置部分代码
             MCServerSet tmpObject = new MCServerSet();
-            config.Init(Application.StartupPath + @"\server\server.properties");
+            config.Init(server.server_local + @"\server.properties");
             tmpObject.allownethe = config.GetString("allow-nethe").ToLower() == "true" ? true : false;
             tmpObject.allowflight = config.GetString("allow-flight").ToLower() == "true" ? true : false;
             try { tmpObject.serverport = UInt16.Parse(config.GetString("server-port")); }
@@ -100,10 +99,9 @@ namespace Minecraft_Server_QQ
             tmpObject.motd = config.GetString("motd");
             tmpObject.enablecommandblock = config.GetString("enable-command-block").ToLower() == "true" ? true : false;
             config.UnInit(false);
-            #endregion
             //显示设置
-            propertyGrid1.SelectedObject = tmpObject;
-            */
+            servre.form.propertyGrid1.SelectedObject = tmpObject;
+            
         }
         public bool SaveMCServerConfig(server_save server)
         {

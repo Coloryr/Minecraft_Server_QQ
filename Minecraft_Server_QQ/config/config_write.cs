@@ -20,86 +20,80 @@ namespace Minecraft_Server_QQ
             {
                 XmlDocument xmldoc = new XmlDocument();
                 xmldoc.Load(path);
-                if (XML.read(path, "服务器列表", "服务器名字") == obj.server_name)
+                ///导入XML文件
+                XmlNodeList nodeList = xmldoc.SelectSingleNode("config").ChildNodes;
+                foreach (XmlNode xn in nodeList)//遍历所有子节点
                 {
-                    ///导入XML文件
-                    XmlNodeList nodeList = xmldoc.SelectSingleNode("config").ChildNodes;
-                    foreach (XmlNode xn in nodeList)//遍历所有子节点
+                    //查找服务器
+                    if (xn.Name == "服务器列表")
                     {
-                        //查找服务器
-                        if (xn.Name == "服务器列表")
+                        XmlNode xnLurl = xn.SelectSingleNode("服务器名字");
+                        if (xnLurl.InnerText == obj.server_name)
                         {
-                            XmlNode xnLurl = xn.SelectSingleNode("服务器名字");
-                            if (xnLurl.InnerText == obj.server_name)
-                            {
-                                xnLurl = xn.SelectSingleNode("服务端路径");
-                                xnLurl.InnerText = obj.server_local;
-                                xnLurl = xn.SelectSingleNode("服务端核心");
-                                xnLurl.InnerText = obj.server_core;
-                                xnLurl = xn.SelectSingleNode("服务器参数");
-                                xnLurl.InnerText = obj.server_arg;
-                                xnLurl = xn.SelectSingleNode("JAVA路径");
-                                xnLurl.InnerText = obj.java_local;
-                                xnLurl = xn.SelectSingleNode("JAVA参数");
-                                xnLurl.InnerText = obj.java_arg;
-                                xnLurl = xn.SelectSingleNode("自动重启");
-                                xnLurl.InnerText = obj.auto_restart ? "开" : "关";
-                                xnLurl = xn.SelectSingleNode("开软件启动");
-                                xnLurl.InnerText = obj.open_start ? "开" : "关";
-                                xnLurl = xn.SelectSingleNode("最大内存");
-                                xnLurl.InnerText = obj.max_m.ToString();
-                                xnLurl = xn.SelectSingleNode("最小内存");
-                                xnLurl.InnerText = obj.min_m.ToString();
-                                xmldoc.Save(path);
-                                return;
-                            }
+                            xnLurl = xn.SelectSingleNode("服务端路径");
+                            xnLurl.InnerText = obj.server_local;
+                            xnLurl = xn.SelectSingleNode("服务端核心");
+                            xnLurl.InnerText = obj.server_core;
+                            xnLurl = xn.SelectSingleNode("服务器参数");
+                            xnLurl.InnerText = obj.server_arg;
+                            xnLurl = xn.SelectSingleNode("JAVA路径");
+                            xnLurl.InnerText = obj.java_local;
+                            xnLurl = xn.SelectSingleNode("JAVA参数");
+                            xnLurl.InnerText = obj.java_arg;
+                            xnLurl = xn.SelectSingleNode("自动重启");
+                            xnLurl.InnerText = obj.auto_restart ? "开" : "关";
+                            xnLurl = xn.SelectSingleNode("开软件启动");
+                            xnLurl.InnerText = obj.open_start ? "开" : "关";
+                            xnLurl = xn.SelectSingleNode("最大内存");
+                            xnLurl.InnerText = obj.max_m.ToString();
+                            xnLurl = xn.SelectSingleNode("最小内存");
+                            xnLurl.InnerText = obj.min_m.ToString();
+                            xmldoc.Save(path);
+                            return;
                         }
                     }
                 }
-                else
-                {
-                    //根节点
-                    XmlElement root = xmldoc.DocumentElement;
-                    //子节点
-                    XmlElement Child;
-                    //保存的值
-                    XmlElement Text;
-                    Child = xmldoc.CreateElement("服务器列表");
-                    root.AppendChild(Child);
+                //根节点
+                XmlElement root = xmldoc.DocumentElement;
+                //子节点
+                XmlElement Child;
+                //保存的值
+                XmlElement Text;
+                Child = xmldoc.CreateElement("服务器列表");
+                root.AppendChild(Child);
 
-                    Text = xmldoc.CreateElement("服务器名字");
-                    Text.InnerText = obj.server_name;
-                    Child.AppendChild(Text);
-                    Text = xmldoc.CreateElement("服务端路径");
-                    Text.InnerText = obj.server_local;
-                    Child.AppendChild(Text);
-                    Text = xmldoc.CreateElement("服务端核心");
-                    Text.InnerText = obj.server_core;
-                    Child.AppendChild(Text);
-                    Text = xmldoc.CreateElement("服务器参数");
-                    Text.InnerText = obj.server_arg;
-                    Child.AppendChild(Text);
-                    Text = xmldoc.CreateElement("JAVA路径");
-                    Text.InnerText = obj.java_local;
-                    Child.AppendChild(Text);
-                    Text = xmldoc.CreateElement("JAVA参数");
-                    Text.InnerText = obj.java_arg;
-                    Child.AppendChild(Text);
-                    Text = xmldoc.CreateElement("自动重启");
-                    Text.InnerText = obj.auto_restart ? "开" : "关";
-                    Child.AppendChild(Text);
-                    Text = xmldoc.CreateElement("开软件启动");
-                    Text.InnerText = obj.open_start ? "开" : "关";
-                    Child.AppendChild(Text);
-                    Text = xmldoc.CreateElement("最大内存");
-                    Text.InnerText = obj.max_m.ToString();
-                    Child.AppendChild(Text);
-                    Text = xmldoc.CreateElement("最小内存");
-                    Text.InnerText = obj.min_m.ToString();
-                    Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("服务器名字");
+                Text.InnerText = obj.server_name;
+                Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("服务端路径");
+                Text.InnerText = obj.server_local;
+                Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("服务端核心");
+                Text.InnerText = obj.server_core;
+                Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("服务器参数");
+                Text.InnerText = obj.server_arg;
+                Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("JAVA路径");
+                Text.InnerText = obj.java_local;
+                Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("JAVA参数");
+                Text.InnerText = obj.java_arg;
+                Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("自动重启");
+                Text.InnerText = obj.auto_restart ? "开" : "关";
+                Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("开软件启动");
+                Text.InnerText = obj.open_start ? "开" : "关";
+                Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("最大内存");
+                Text.InnerText = obj.max_m.ToString();
+                Child.AppendChild(Text);
+                Text = xmldoc.CreateElement("最小内存");
+                Text.InnerText = obj.min_m.ToString();
+                Child.AppendChild(Text);
 
-                    xmldoc.Save(path);
-                }
+                xmldoc.Save(path);
             }
             catch (Exception)
             {
@@ -109,6 +103,37 @@ namespace Minecraft_Server_QQ
                     XML.CreateFile(path, 1);
                     write_server(path, obj);
                 }
+            }
+        }
+        public static void delete_server(string path, server_save obj)
+        {
+            if (File.Exists(path) == false)
+                XML.CreateFile(path, 0);
+            try
+            {
+                XmlDocument xmldoc = new XmlDocument();
+                xmldoc.Load(path);
+                ///导入XML文件
+                XmlNodeList nodeList = xmldoc.SelectSingleNode("config").ChildNodes;
+                foreach (XmlNode xn in nodeList)//遍历所有子节点
+                {
+                    //查找服务器
+                    if (xn.Name == "服务器列表")
+                    {
+                        XmlNode xnLurl = xn.SelectSingleNode("服务器名字");
+                        if (xnLurl.InnerText == obj.server_name)
+                        {
+                            XmlNode a = xmldoc.SelectSingleNode("config");
+                            a.RemoveChild(xn);
+                            xmldoc.Save(path);
+                            return;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
             }
         }
     }
