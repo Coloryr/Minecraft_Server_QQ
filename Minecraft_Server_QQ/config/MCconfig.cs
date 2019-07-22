@@ -23,12 +23,22 @@ namespace Minecraft_Server_QQ
                 file.Read(tmpArr, 0, (int)file.Length);
                 file.Close();
                 aTemp = Encoding.Default.GetString(tmpArr).Split("\r\n".ToCharArray()).ToList();
+                while(aTemp.Contains("") == true)
+                    aTemp.Remove("");
             }
             catch
             {
                 return false;
             }
             return true;
+        }
+        public string string_get(string a, string b)
+        {
+            int c = a.IndexOf(b);
+            if (c > 0)
+                return a.Substring(0, c);
+            else
+                return null;
         }
         //根据名称读取内容，如 pvp=true，传入pvp返回true,找不到返回空文本
         public string GetString(string s)
@@ -37,11 +47,10 @@ namespace Minecraft_Server_QQ
                 return "";
             foreach (string szTmp in aTemp)
             {
-                if (szTmp.Length > s.Length)//如果文本行总长度小于传入参数长度，必定不是需要的内容
+                if (s == string_get(szTmp, "="))
                 {
-                    if (szTmp.StartsWith(s, StringComparison.OrdinalIgnoreCase))//忽略大小写
-                        return szTmp.Substring(s.Length + 1, szTmp.Length - s.Length - 1);
-                }
+                    return szTmp.Substring(s.Length + 1, szTmp.Length - s.Length - 1);
+                }        
             }
             return "";
         }

@@ -61,7 +61,7 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -155,7 +155,7 @@
     <Compile Include="mc_server\MCServerSet.cs" />
     <Compile Include="mc_server\MCSEvent.cs" />
     <Compile Include="mc_server\MCSTask.cs" />
-    <Compile Include="mc_server\server.cs" />
+    <Compile Include="mc_server\MCConfig.cs" />
     <Compile Include="other.cs" />
     <Compile Include="plugin_mod\plugin_mod.cs" />
     <Compile Include="plugin_mod\plugin_mod_list.cs" />

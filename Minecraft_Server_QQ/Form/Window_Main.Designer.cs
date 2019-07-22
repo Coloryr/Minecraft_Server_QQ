@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window_Main));
             this.tabPage_Server = new System.Windows.Forms.TabPage();
             this.open_start = new System.Windows.Forms.CheckBox();
             this.auto_restart = new System.Windows.Forms.CheckBox();
@@ -78,7 +77,7 @@
             this.tabPage_serverSet = new System.Windows.Forms.TabPage();
             this.button_saveServerSet = new System.Windows.Forms.Button();
             this.button_readServerSet = new System.Windows.Forms.Button();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.config = new System.Windows.Forms.PropertyGrid();
             this.tabPage_serverInfo = new System.Windows.Forms.TabPage();
             this.button_serverStop = new System.Windows.Forms.Button();
             this.button_serverClose = new System.Windows.Forms.Button();
@@ -547,7 +546,7 @@
             // 
             this.tabPage_serverSet.Controls.Add(this.button_saveServerSet);
             this.tabPage_serverSet.Controls.Add(this.button_readServerSet);
-            this.tabPage_serverSet.Controls.Add(this.propertyGrid1);
+            this.tabPage_serverSet.Controls.Add(this.config);
             this.tabPage_serverSet.Location = new System.Drawing.Point(4, 22);
             this.tabPage_serverSet.Name = "tabPage_serverSet";
             this.tabPage_serverSet.Size = new System.Drawing.Size(637, 341);
@@ -557,9 +556,9 @@
             // 
             // button_saveServerSet
             // 
-            this.button_saveServerSet.Location = new System.Drawing.Point(358, 286);
+            this.button_saveServerSet.Location = new System.Drawing.Point(508, 314);
             this.button_saveServerSet.Name = "button_saveServerSet";
-            this.button_saveServerSet.Size = new System.Drawing.Size(222, 36);
+            this.button_saveServerSet.Size = new System.Drawing.Size(126, 24);
             this.button_saveServerSet.TabIndex = 2;
             this.button_saveServerSet.Text = "保存当前设置";
             this.button_saveServerSet.UseVisualStyleBackColor = true;
@@ -567,23 +566,24 @@
             // 
             // button_readServerSet
             // 
-            this.button_readServerSet.Location = new System.Drawing.Point(51, 286);
+            this.button_readServerSet.Location = new System.Drawing.Point(376, 314);
             this.button_readServerSet.Name = "button_readServerSet";
-            this.button_readServerSet.Size = new System.Drawing.Size(222, 36);
+            this.button_readServerSet.Size = new System.Drawing.Size(126, 24);
             this.button_readServerSet.TabIndex = 1;
             this.button_readServerSet.Text = "立即刷新设置";
             this.button_readServerSet.UseVisualStyleBackColor = true;
             this.button_readServerSet.Click += new System.EventHandler(this.button_readServerSet_Click);
             // 
-            // propertyGrid1
+            // config
             // 
-            this.propertyGrid1.CategoryForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.propertyGrid1.Location = new System.Drawing.Point(3, 3);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(631, 277);
-            this.propertyGrid1.TabIndex = 0;
-            this.propertyGrid1.ToolbarVisible = false;
-            this.propertyGrid1.ViewBackColor = System.Drawing.SystemColors.ScrollBar;
+            this.config.CategoryForeColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.config.Location = new System.Drawing.Point(3, 3);
+            this.config.Name = "config";
+            this.config.Size = new System.Drawing.Size(631, 305);
+            this.config.TabIndex = 0;
+            this.config.ToolbarVisible = false;
+            this.config.ViewBackColor = System.Drawing.SystemColors.ScrollBar;
+            this.config.Click += new System.EventHandler(this.Config_Click);
             // 
             // tabPage_serverInfo
             // 
@@ -698,7 +698,7 @@
             // server_local_core
             // 
             this.server_local_core.DefaultExt = "jar";
-            this.server_local_core.Filter = "(服务器核心*.jar)|.jar";
+            this.server_local_core.Filter = "(服务器核心)|*.jar";
             // 
             // Window_Main
             // 
@@ -708,7 +708,7 @@
             this.ClientSize = new System.Drawing.Size(669, 391);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = global::Minecraft_Server_QQ.Properties.Resources.Color_yr;
             this.MaximizeBox = false;
             this.Name = "Window_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -734,7 +734,7 @@
             this.groupBox_25.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.Icon = Properties.Resources.Color_yr;
+
         }
 
         #endregion
@@ -762,7 +762,7 @@
         private System.Windows.Forms.TabPage tabPage_serverSet;
         private System.Windows.Forms.Button button_saveServerSet;
         private System.Windows.Forms.Button button_readServerSet;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
+        public System.Windows.Forms.PropertyGrid config;
         private System.Windows.Forms.TabPage tabPage_serverInfo;
         private System.Windows.Forms.Button button_serverStop;
         private System.Windows.Forms.Button button_serverClose;

@@ -285,11 +285,8 @@ namespace Minecraft_Server_QQ
         {
             if (e.TabPage == tabPage_serverSet)
             {
-                Task.Factory.StartNew(() =>
-                {
-                    server server = new server();
-                    server.ReadMCServerConfig(server_save);
-                });
+                server server = new server();
+                config.SelectedObject = server.ReadMCServerConfig(server_save);
             }
             else if (e.TabPage == tabPage_serverPlugin && plugins_run == false)
             {
@@ -351,15 +348,15 @@ namespace Minecraft_Server_QQ
         //刷新游戏设置
         private void button_readServerSet_Click(object sender, EventArgs e)
         {
-            propertyGrid1.SelectedObject = null;
+            config.SelectedObject = null;
             server server = new server();
-            server.ReadMCServerConfig(server_save);
+            config.SelectedObject = server.ReadMCServerConfig(server_save);
         }
         //保存游戏设置
         private void button_saveServerSet_Click(object sender, EventArgs e)
         {
             server server = new server();
-            if (server.SaveMCServerConfig(server_save))
+            if (server.SaveMCServerConfig(server_save, (MCServerSet)config.SelectedObject))
                 MessageBox.Show("保存设置成功");
             else
                 MessageBox.Show("保存设置失败，请检查服务器设置文件是否被占用。");
@@ -430,6 +427,11 @@ namespace Minecraft_Server_QQ
             {
                 MessageBox.Show("未找到JAVA");
             }
+        }
+
+        private void Config_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
