@@ -7,7 +7,7 @@ using System.Text;
 namespace Minecraft_Server_QQ
 {
     //用来操作MC配置文件(server.properties)，不区分大小写
-    public class MCconfig
+    public class config_mcserver
     {
         private string filePath;//文件路径
         private List<string> aTemp;//文件数据临时存储

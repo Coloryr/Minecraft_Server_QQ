@@ -17,7 +17,7 @@ namespace Minecraft_Server_QQ
         /// <param name="obj">服务器储存</param>
         public MCServerSet ReadMCServerConfig(server_save server)//读取并设置服务器设置界面内容
         {
-            MCconfig config = new MCconfig();
+            config_mcserver config = new config_mcserver();
             MCServerSet tmpObject = new MCServerSet();
             if (!File.Exists(server.server_local + @"\server.properties"))
             {
@@ -126,7 +126,7 @@ namespace Minecraft_Server_QQ
         {
             if (tmpObj != null)
             {
-                MCconfig config = new MCconfig();
+                config_mcserver config = new config_mcserver();
                 config.Init(server.server_local + @"\server.properties");
                 config.SetString("spawn-protection", tmpObj.spawn_protection.ToString());
                 config.SetString("max-tick-time", tmpObj.max_tick_time.ToString());

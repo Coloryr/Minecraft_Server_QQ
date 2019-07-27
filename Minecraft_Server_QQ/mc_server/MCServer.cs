@@ -15,7 +15,6 @@ namespace Minecraft_Server_QQ
         private string fileDir;//决定服务端运行在那个目录
         private string javaPath;//java.exe路径
         private Process ps;//进程
-        private Thread th_jishi;//计时线程，用于解决部分电脑出现的兼容性BUG
         private string cmd;//命令行，保存重启用
         public int server_now = 0;
         public MCServer(string fileDir)
@@ -78,11 +77,6 @@ namespace Minecraft_Server_QQ
                 serverStop?.Invoke(this, new Event.MCSEvent(null, ps.ExitCode));
                 //清理对象
                 ps = null;
-                try
-                {
-                    th_jishi.Abort();
-                }
-                catch { }
                 server_now = 0;
             });
         }
@@ -114,7 +108,7 @@ namespace Minecraft_Server_QQ
                 serverEventHandler tmp = this.serverStop;
                 this.serverStop = null;
                 Stop();
-                while (ps.HasExited == false) ;
+                while (ps.HasExited == false)
                 {
                     Thread.Sleep(2000);
                 }

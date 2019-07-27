@@ -24,9 +24,8 @@ namespace Minecraft_Server_QQ
             plugin_mod_list list = new plugin_mod_list();
             foreach (string file in files)
             {
-                plugin_mod_save save = new plugin_mod_save();
-                GetPluginsInfo(path, file, out save);
-                if(list.list.Contains(save) == false)
+                plugin_mod_save save = GetPluginsInfo(path, file);
+                if (list.list.Contains(save) == false)
                     list.list.Add(save);
             }
             return list;
@@ -42,31 +41,28 @@ namespace Minecraft_Server_QQ
             plugin_mod_list list = new plugin_mod_list();
             foreach (string file in files)
             {
-                plugin_mod_save save = new plugin_mod_save();
-                if (GetModsInfo(path, file, out save) == false)
-                {
-                    MessageBox.Show("读取错误");
-                    return null;
-                }
+                plugin_mod_save save = GetModsInfo(path, file);
                 if (list.list.Contains(save) == false)
                     list.list.Add(save);
             }
             return list;
         }
         //读取插件(jar)信息,返回数组长度为4，内容分别是：插件名，版本，作者，本地文件名
-        public void GetPluginsInfo(string path, string fileName, out plugin_mod_save save)
+        public plugin_mod_save GetPluginsInfo(string path, string fileName)
         {
-            save = new plugin_mod_save();
+            plugin_mod_save save = new plugin_mod_save();
+            ZipFile zip = null;
+            Stream stream = null;
             try
             {
-                ZipFile zip = new ZipFile(fileName);
+                zip = new ZipFile(fileName);
                 ZipEntry zp = zip.GetEntry("plugin.yml");
                 if (zp == null)
                 {
                     save.file = save.name = fileName.Replace(path + @"plugins\", "");
-                    return;
+                    return save;
                 }
-                Stream stream = zip.GetInputStream(zp);
+                stream = zip.GetInputStream(zp);
                 TextReader reader = new StreamReader(stream);
                 YamlStream yaml = new YamlStream();
                 yaml.Load(reader);
@@ -86,31 +82,37 @@ namespace Minecraft_Server_QQ
                 save.file = fileName.Replace(path + @"plugins\", "");
                 zip.Close();
                 stream.Close();
-                return;
+                return save;
             }
             catch (Exception e)
             {
                 save.file = save.name = fileName.Replace(path + @"plugins\", "");
                 logs.Log_write("[ERROR]" + e.Message);
-                return;
+                if (zip != null)
+                    zip.Close();
+                if (stream != null)
+                    stream.Close();
+                return save;
             }
         }
-        public bool GetModsInfo(string path, string fileName, out plugin_mod_save save)
+        public plugin_mod_save GetModsInfo(string path, string fileName)
         {
-            save = new plugin_mod_save();
-            /*
+            plugin_mod_save save = new plugin_mod_save();
+            ZipFile zip = null;
+            Stream stream = null;
             try
             {
-                ZipFile zip = new ZipFile(fileName);
+                zip = new ZipFile(fileName);
                 ZipEntry zp = zip.GetEntry("mcmod.info");
                 if (zp == null)
-                    return false;
-                Stream stream = zip.GetInputStream(zp);
+                {
+                    save.file = save.name = fileName.Replace(path + @"mods\", "");
+                    return save;
+                }
+                stream = zip.GetInputStream(zp);
                 TextReader reader = new StreamReader(stream);
                 string text = reader.ReadToEnd();
-                zip.Close();
-                stream.Close();
-                // Load the stream
+                /*
                 JObject json = JObject.Parse(text);
                 if (json.ContainsKey("modList"))
                 {
@@ -121,15 +123,20 @@ namespace Minecraft_Server_QQ
                     save.auth = a["authorList"];
                     save.file = zip.Name;
                 }
-                return true;
+                */
+                zip.Close();
+                stream.Close();
+                return save;
             }
             catch (Exception e)
             {
                 logs.Log_write("[ERROR]" + e.Message);
-                return false;
+                if (zip != null)
+                    zip.Close();
+                if (stream != null)
+                    stream.Close();
+                return save;
             }
-            */
-            return false;
         }
     }
 }

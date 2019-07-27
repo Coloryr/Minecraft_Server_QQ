@@ -79,7 +79,7 @@ namespace Minecraft_Server_QQ
                     CopyDirectory(s, mubiaoDir + "\\" + GetPathFileName(s));
                 }
             }
-            catch (Exception e) { }
+            catch { }
         }
         static public string GetPathFileName(string Path)//获取路径中的文件名
         {

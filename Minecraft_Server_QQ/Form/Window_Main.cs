@@ -126,7 +126,7 @@ namespace Minecraft_Server_QQ
                 return;
             }
             //创建eula.txt
-            MCconfig config = new MCconfig();
+            config_mcserver config = new config_mcserver();
             if (!File.Exists(server_save.server_local + "eula.txt"))
             {
                 if (MessageBox.Show("EULA文件缺失，是否同意MOJANG EULA", "EULA", MessageBoxButtons.YesNo) == DialogResult.Yes)
