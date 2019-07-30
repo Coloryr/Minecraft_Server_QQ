@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Minecraft_Server_QQ.Config;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace Minecraft_Server_QQ
+namespace Minecraft_Server_QQ.Mc_server
 {
     class server
     {
@@ -15,10 +10,10 @@ namespace Minecraft_Server_QQ
         /// </summary>
         /// <param name="path">文件(包含路径)</param>
         /// <param name="obj">服务器储存</param>
-        public MCServerSet ReadMCServerConfig(server_save server)//读取并设置服务器设置界面内容
+        public Propertie_Set ReadMCServerConfig(Config_class server)//读取并设置服务器设置界面内容
         {
-            config_mcserver config = new config_mcserver();
-            MCServerSet tmpObject = new MCServerSet();
+            Config_properties config = new Config_properties();
+            Propertie_Set tmpObject = new Propertie_Set();
             if (!File.Exists(server.server_local + @"\server.properties"))
             {
                 //如果配置文件不存在则先创建一个标准的配置文件
@@ -122,11 +117,11 @@ namespace Minecraft_Server_QQ
             return tmpObject;
 
         }
-        public bool SaveMCServerConfig(server_save server, MCServerSet tmpObj)
+        public bool SaveMCServerConfig(Config_class server, Propertie_Set tmpObj)
         {
             if (tmpObj != null)
             {
-                config_mcserver config = new config_mcserver();
+                Config_properties config = new Config_properties();
                 config.Init(server.server_local + @"\server.properties");
                 config.SetString("spawn-protection", tmpObj.spawn_protection.ToString());
                 config.SetString("max-tick-time", tmpObj.max_tick_time.ToString());
@@ -176,7 +171,7 @@ namespace Minecraft_Server_QQ
             }
             return false;
         }
-        public void ReadTaskInfo(server_save server)
+        public void ReadTaskInfo(Config_class server)
         {
             /*
             //因为读取很快所以就不需要像Mod和插件哪样使用多线程了

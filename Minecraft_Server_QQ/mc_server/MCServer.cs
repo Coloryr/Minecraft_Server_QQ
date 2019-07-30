@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Minecraft_Server_QQ.Utils;
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,6 +70,7 @@ namespace Minecraft_Server_QQ
                         }
                     }
                     serverMessage?.Invoke(this, new Event.MCSEvent(line, 0));
+                    Thread.Sleep(10);
                 }
             });
             Task.Factory.StartNew(() =>
@@ -78,6 +80,7 @@ namespace Minecraft_Server_QQ
                 //清理对象
                 ps = null;
                 server_now = 0;
+                Thread.Sleep(10);
             });
         }
         public bool Stop()

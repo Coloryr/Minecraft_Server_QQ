@@ -37,8 +37,7 @@ namespace Minecraft_Server_QQ
                 string [] files = Directory.GetFiles(taskDir,"*.ini");
                 foreach (string s in files)
                 {
-                    //对于错误的配置文件则讲剩余时间修改为-1（永不执行）
-                    WinAPI.WritePrivateProfileString(s,"ENCP TASK","S",WinAPI.GetPrivateProfileString(s,"ENCP TASK","time","-1"));
+
                 }
             }
         }
@@ -65,86 +64,7 @@ namespace Minecraft_Server_QQ
         }//用于发送自动重启提示
         private void Th_Task()
         {
-            while (Start.is_close == false)
-            {
-                Thread.Sleep(1000);
-                //读取任务配置文件中的内容，判断并执行
-                if (Directory.Exists(taskDir))
-                {
-                    string[] files = Directory.GetFiles(taskDir, "*.ini");
-                    foreach (string s in files)
-                    {
-                        //首先将剩余时间S递减1,如果递减后为0则继续判断执行任务
-                        string szTmp = WinAPI.GetPrivateProfileString(s, "ENCP TASK", "S", "-1");
-                        string content = WinAPI.GetPrivateProfileString(s, "ENCP TASK", "content", "-1");
-                        string type = WinAPI.GetPrivateProfileString(s, "ENCP TASK", "type", "-1");
-                        int time;
-                        try { time = int.Parse(szTmp); }
-                        catch { time = -1; }
-                        time--;
-                        //如果任务是重启且剩余时间分别是10分钟，1分钟的时候则自动发送提示
-                        if (content == "2" && type == "0")
-                        {
-                            if (time == 10)
-                                Server.SendMessage("say [提醒]服务器还有10分钟将自动重启...");
-                            if (time == 1)
-                                new Thread(Th_AutoMessage).Start();
-                        }
-                        if (time <= 0)//执行任务
-                        {
-                            //将time改成任务周期时常
-                            try { time = int.Parse(WinAPI.GetPrivateProfileString(s, "ENCP TASK", "time", "-1")); }
-                            catch { time = -1; }
-                            //首先判断任务类型
-                            if (type == "0")
-                            {
-                                //系统内置任务，则根据content判断任务类型并执行对应功能
-                                if (content == "0")
-                                {//关闭服务器
-                                    if (!Server.IsProcessRun())
-                                        continue;
-                                    ptask?.Invoke(0);
-                                }
-                                if (content == "1")
-                                {//开启服务器
-                                    if (Server.IsProcessRun())
-                                        continue;
-                                    ptask?.Invoke(1);
-                                }
-                                if (content == "2")
-                                {//重启服务器
-                                    ptask?.Invoke(2);
-                                }
-                                if (content == "3")
-                                {//备份地图
-                                    if (!Directory.Exists(Dir + @"\server\world\"))
-                                        continue;//如果地图文件不存在就不需要向下执行备份工作了
-                                    if (!Directory.Exists(Dir + @"\Backups\"))
-                                        Directory.CreateDirectory(Dir+@"\Backups\");
-                                    //按照时间创建文件夹
-                                    string timeDir = DateTime.Now.ToString("yyyyMMdd-HH.mm.ss");
-                                    Directory.CreateDirectory(Dir+@"\Backups\"+timeDir+"\\");
-                                    //检测world,world_nether,world_the_end三个目录是否存在，存在则复制
-                                    if (Directory.Exists(Dir + @"\server\world\"))
-                                        other.CopyDirectory(Dir + @"\server\world", Dir + @"\Backups\" + timeDir + @"\world");
-                                    if (Directory.Exists(Dir + @"\server\world_nether\"))
-                                        other.CopyDirectory(Dir + @"\server\world_nether", Dir + @"\Backups\" + timeDir + @"\world_nether");
-                                    if (Directory.Exists(Dir + @"\server\world_the_end\"))
-                                        other.CopyDirectory(Dir + @"\server\world_the_end", Dir + @"\Backups\" + timeDir + @"\world_the_end");
-                                }
-                            }
-                            if (type == "1")
-                            {
-                                //自定义任务，直接把内容发送给服务端即可
-                                Server.SendMessage(WinAPI.GetPrivateProfileString(s, "ENCP TASK", "content",""));
-                            }
-                            //其他类型则无视
-                        }
-                        //将时间写回文件
-                        WinAPI.WritePrivateProfileString(s, "ENCP TASK", "S", time.ToString());
-                    }
-                }
-            }
+
         }
     }
 }

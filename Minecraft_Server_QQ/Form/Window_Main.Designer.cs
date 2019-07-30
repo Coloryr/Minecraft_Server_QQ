@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
             this.tabPage_Server = new System.Windows.Forms.TabPage();
             this.open_start = new System.Windows.Forms.CheckBox();
             this.auto_restart = new System.Windows.Forms.CheckBox();
@@ -118,7 +118,7 @@
             this.tabPage_Server.Location = new System.Drawing.Point(4, 22);
             this.tabPage_Server.Name = "tabPage_Server";
             this.tabPage_Server.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Server.Size = new System.Drawing.Size(637, 341);
+            this.tabPage_Server.Size = new System.Drawing.Size(656, 365);
             this.tabPage_Server.TabIndex = 7;
             this.tabPage_Server.Text = "服务器设置";
             this.tabPage_Server.UseVisualStyleBackColor = true;
@@ -126,7 +126,7 @@
             // open_start
             // 
             this.open_start.AutoSize = true;
-            this.open_start.Location = new System.Drawing.Point(117, 315);
+            this.open_start.Location = new System.Drawing.Point(110, 341);
             this.open_start.Name = "open_start";
             this.open_start.Size = new System.Drawing.Size(120, 16);
             this.open_start.TabIndex = 47;
@@ -136,7 +136,7 @@
             // auto_restart
             // 
             this.auto_restart.AutoSize = true;
-            this.auto_restart.Location = new System.Drawing.Point(16, 315);
+            this.auto_restart.Location = new System.Drawing.Point(8, 341);
             this.auto_restart.Name = "auto_restart";
             this.auto_restart.Size = new System.Drawing.Size(96, 16);
             this.auto_restart.TabIndex = 46;
@@ -155,18 +155,18 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.java_local);
-            this.groupBox2.Location = new System.Drawing.Point(8, 174);
+            this.groupBox2.Location = new System.Drawing.Point(0, 159);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(623, 133);
+            this.groupBox2.Size = new System.Drawing.Size(656, 126);
             this.groupBox2.TabIndex = 43;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "JAVA设置";
             // 
             // button_java_auto
             // 
-            this.button_java_auto.Location = new System.Drawing.Point(369, 103);
+            this.button_java_auto.Location = new System.Drawing.Point(350, 101);
             this.button_java_auto.Name = "button_java_auto";
-            this.button_java_auto.Size = new System.Drawing.Size(121, 24);
+            this.button_java_auto.Size = new System.Drawing.Size(150, 24);
             this.button_java_auto.TabIndex = 14;
             this.button_java_auto.Text = "自动查找JAVA";
             this.button_java_auto.UseVisualStyleBackColor = true;
@@ -226,9 +226,9 @@
             // 
             // button_java
             // 
-            this.button_java.Location = new System.Drawing.Point(496, 103);
+            this.button_java.Location = new System.Drawing.Point(506, 101);
             this.button_java.Name = "button_java";
-            this.button_java.Size = new System.Drawing.Size(121, 24);
+            this.button_java.Size = new System.Drawing.Size(150, 24);
             this.button_java.TabIndex = 6;
             this.button_java.Text = "选择JAVA";
             this.button_java.UseVisualStyleBackColor = true;
@@ -269,16 +269,16 @@
             // 
             // server_name
             // 
-            this.server_name.Location = new System.Drawing.Point(77, 9);
+            this.server_name.Location = new System.Drawing.Point(74, 0);
             this.server_name.Name = "server_name";
-            this.server_name.Size = new System.Drawing.Size(554, 21);
+            this.server_name.Size = new System.Drawing.Size(582, 21);
             this.server_name.TabIndex = 44;
             this.server_name.Text = "server1";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 12);
+            this.label4.Location = new System.Drawing.Point(3, 3);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 42;
@@ -293,18 +293,18 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.server_local);
-            this.groupBox1.Location = new System.Drawing.Point(8, 36);
+            this.groupBox1.Location = new System.Drawing.Point(0, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(623, 132);
+            this.groupBox1.Size = new System.Drawing.Size(656, 126);
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器设置";
             // 
             // button_server_core
             // 
-            this.button_server_core.Location = new System.Drawing.Point(496, 101);
+            this.button_server_core.Location = new System.Drawing.Point(506, 101);
             this.button_server_core.Name = "button_server_core";
-            this.button_server_core.Size = new System.Drawing.Size(121, 24);
+            this.button_server_core.Size = new System.Drawing.Size(150, 24);
             this.button_server_core.TabIndex = 6;
             this.button_server_core.Text = "选择服务器核心";
             this.button_server_core.UseVisualStyleBackColor = true;
@@ -312,15 +312,15 @@
             // 
             // server_core
             // 
-            this.server_core.Location = new System.Drawing.Point(101, 47);
+            this.server_core.Location = new System.Drawing.Point(93, 47);
             this.server_core.Name = "server_core";
-            this.server_core.Size = new System.Drawing.Size(516, 21);
+            this.server_core.Size = new System.Drawing.Size(563, 21);
             this.server_core.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 50);
+            this.label3.Location = new System.Drawing.Point(-2, 50);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 4;
@@ -328,16 +328,16 @@
             // 
             // server_arg
             // 
-            this.server_arg.Location = new System.Drawing.Point(101, 74);
+            this.server_arg.Location = new System.Drawing.Point(93, 74);
             this.server_arg.Name = "server_arg";
-            this.server_arg.Size = new System.Drawing.Size(516, 21);
+            this.server_arg.Size = new System.Drawing.Size(563, 21);
             this.server_arg.TabIndex = 3;
             this.server_arg.Text = "nogui";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 77);
+            this.label2.Location = new System.Drawing.Point(-2, 77);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 12);
             this.label2.TabIndex = 2;
@@ -346,7 +346,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 23);
+            this.label1.Location = new System.Drawing.Point(-2, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 1;
@@ -354,16 +354,16 @@
             // 
             // server_local
             // 
-            this.server_local.Location = new System.Drawing.Point(101, 20);
+            this.server_local.Location = new System.Drawing.Point(93, 20);
             this.server_local.Name = "server_local";
-            this.server_local.Size = new System.Drawing.Size(516, 21);
+            this.server_local.Size = new System.Drawing.Size(563, 21);
             this.server_local.TabIndex = 0;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(510, 310);
+            this.button1.Location = new System.Drawing.Point(506, 341);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 24);
+            this.button1.Size = new System.Drawing.Size(150, 24);
             this.button1.TabIndex = 40;
             this.button1.Text = "保存";
             this.button1.UseVisualStyleBackColor = true;
@@ -374,7 +374,7 @@
             this.tabPage_serverTask.Controls.Add(this.groupBox_41);
             this.tabPage_serverTask.Location = new System.Drawing.Point(4, 22);
             this.tabPage_serverTask.Name = "tabPage_serverTask";
-            this.tabPage_serverTask.Size = new System.Drawing.Size(637, 341);
+            this.tabPage_serverTask.Size = new System.Drawing.Size(656, 365);
             this.tabPage_serverTask.TabIndex = 4;
             this.tabPage_serverTask.Text = "计划任务";
             this.tabPage_serverTask.UseVisualStyleBackColor = true;
@@ -382,9 +382,9 @@
             // groupBox_41
             // 
             this.groupBox_41.Controls.Add(this.listView_Task);
-            this.groupBox_41.Location = new System.Drawing.Point(3, 3);
+            this.groupBox_41.Location = new System.Drawing.Point(-4, 3);
             this.groupBox_41.Name = "groupBox_41";
-            this.groupBox_41.Size = new System.Drawing.Size(631, 335);
+            this.groupBox_41.Size = new System.Drawing.Size(664, 366);
             this.groupBox_41.TabIndex = 3;
             this.groupBox_41.TabStop = false;
             this.groupBox_41.Text = "计划任务(右键可管理任务/点我添加任务)";
@@ -402,7 +402,7 @@
             this.listView_Task.Location = new System.Drawing.Point(3, 17);
             this.listView_Task.MultiSelect = false;
             this.listView_Task.Name = "listView_Task";
-            this.listView_Task.Size = new System.Drawing.Size(625, 315);
+            this.listView_Task.Size = new System.Drawing.Size(658, 346);
             this.listView_Task.TabIndex = 0;
             this.listView_Task.UseCompatibleStateImageBehavior = false;
             this.listView_Task.View = System.Windows.Forms.View.Details;
@@ -419,14 +419,14 @@
             // columnHeader11
             // 
             this.columnHeader11.Text = "重复周期";
-            this.columnHeader11.Width = 111;
+            this.columnHeader11.Width = 143;
             // 
             // tabPage_serverMod
             // 
             this.tabPage_serverMod.Controls.Add(this.groupBox_68);
             this.tabPage_serverMod.Location = new System.Drawing.Point(4, 22);
             this.tabPage_serverMod.Name = "tabPage_serverMod";
-            this.tabPage_serverMod.Size = new System.Drawing.Size(637, 341);
+            this.tabPage_serverMod.Size = new System.Drawing.Size(656, 365);
             this.tabPage_serverMod.TabIndex = 3;
             this.tabPage_serverMod.Text = "服务器MOD";
             this.tabPage_serverMod.UseVisualStyleBackColor = true;
@@ -434,9 +434,9 @@
             // groupBox_68
             // 
             this.groupBox_68.Controls.Add(this.listView_mods);
-            this.groupBox_68.Location = new System.Drawing.Point(3, 3);
+            this.groupBox_68.Location = new System.Drawing.Point(-4, 3);
             this.groupBox_68.Name = "groupBox_68";
-            this.groupBox_68.Size = new System.Drawing.Size(631, 335);
+            this.groupBox_68.Size = new System.Drawing.Size(664, 366);
             this.groupBox_68.TabIndex = 2;
             this.groupBox_68.TabStop = false;
             this.groupBox_68.Text = "服务器MOD(右键可管理MOD)";
@@ -455,7 +455,7 @@
             this.listView_mods.Location = new System.Drawing.Point(3, 17);
             this.listView_mods.MultiSelect = false;
             this.listView_mods.Name = "listView_mods";
-            this.listView_mods.Size = new System.Drawing.Size(625, 315);
+            this.listView_mods.Size = new System.Drawing.Size(658, 346);
             this.listView_mods.TabIndex = 0;
             this.listView_mods.UseCompatibleStateImageBehavior = false;
             this.listView_mods.View = System.Windows.Forms.View.Details;
@@ -478,14 +478,14 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "本地文件名";
-            this.columnHeader4.Width = 170;
+            this.columnHeader4.Width = 203;
             // 
             // tabPage_serverPlugin
             // 
             this.tabPage_serverPlugin.Controls.Add(this.groupBox_32);
             this.tabPage_serverPlugin.Location = new System.Drawing.Point(4, 22);
             this.tabPage_serverPlugin.Name = "tabPage_serverPlugin";
-            this.tabPage_serverPlugin.Size = new System.Drawing.Size(637, 341);
+            this.tabPage_serverPlugin.Size = new System.Drawing.Size(656, 365);
             this.tabPage_serverPlugin.TabIndex = 2;
             this.tabPage_serverPlugin.Text = "服务器插件";
             this.tabPage_serverPlugin.UseVisualStyleBackColor = true;
@@ -493,9 +493,9 @@
             // groupBox_32
             // 
             this.groupBox_32.Controls.Add(this.listView_plugins);
-            this.groupBox_32.Location = new System.Drawing.Point(3, 3);
+            this.groupBox_32.Location = new System.Drawing.Point(-4, 3);
             this.groupBox_32.Name = "groupBox_32";
-            this.groupBox_32.Size = new System.Drawing.Size(631, 335);
+            this.groupBox_32.Size = new System.Drawing.Size(664, 366);
             this.groupBox_32.TabIndex = 0;
             this.groupBox_32.TabStop = false;
             this.groupBox_32.Text = "服务器插件(右键可管理插件)";
@@ -512,11 +512,11 @@
             this.listView_plugins.GridLines = true;
             this.listView_plugins.HideSelection = false;
             this.listView_plugins.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem5});
             this.listView_plugins.Location = new System.Drawing.Point(3, 17);
             this.listView_plugins.MultiSelect = false;
             this.listView_plugins.Name = "listView_plugins";
-            this.listView_plugins.Size = new System.Drawing.Size(625, 315);
+            this.listView_plugins.Size = new System.Drawing.Size(658, 346);
             this.listView_plugins.TabIndex = 1;
             this.listView_plugins.UseCompatibleStateImageBehavior = false;
             this.listView_plugins.View = System.Windows.Forms.View.Details;
@@ -540,7 +540,7 @@
             // pulgin_file
             // 
             this.pulgin_file.Text = "本地名";
-            this.pulgin_file.Width = 256;
+            this.pulgin_file.Width = 289;
             // 
             // tabPage_serverSet
             // 
@@ -549,16 +549,16 @@
             this.tabPage_serverSet.Controls.Add(this.config);
             this.tabPage_serverSet.Location = new System.Drawing.Point(4, 22);
             this.tabPage_serverSet.Name = "tabPage_serverSet";
-            this.tabPage_serverSet.Size = new System.Drawing.Size(637, 341);
+            this.tabPage_serverSet.Size = new System.Drawing.Size(656, 365);
             this.tabPage_serverSet.TabIndex = 1;
             this.tabPage_serverSet.Text = "服务器配置文件";
             this.tabPage_serverSet.UseVisualStyleBackColor = true;
             // 
             // button_saveServerSet
             // 
-            this.button_saveServerSet.Location = new System.Drawing.Point(508, 314);
+            this.button_saveServerSet.Location = new System.Drawing.Point(506, 341);
             this.button_saveServerSet.Name = "button_saveServerSet";
-            this.button_saveServerSet.Size = new System.Drawing.Size(126, 24);
+            this.button_saveServerSet.Size = new System.Drawing.Size(150, 24);
             this.button_saveServerSet.TabIndex = 2;
             this.button_saveServerSet.Text = "保存当前设置";
             this.button_saveServerSet.UseVisualStyleBackColor = true;
@@ -566,9 +566,9 @@
             // 
             // button_readServerSet
             // 
-            this.button_readServerSet.Location = new System.Drawing.Point(376, 314);
+            this.button_readServerSet.Location = new System.Drawing.Point(350, 341);
             this.button_readServerSet.Name = "button_readServerSet";
-            this.button_readServerSet.Size = new System.Drawing.Size(126, 24);
+            this.button_readServerSet.Size = new System.Drawing.Size(150, 24);
             this.button_readServerSet.TabIndex = 1;
             this.button_readServerSet.Text = "立即刷新设置";
             this.button_readServerSet.UseVisualStyleBackColor = true;
@@ -577,9 +577,9 @@
             // config
             // 
             this.config.CategoryForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.config.Location = new System.Drawing.Point(3, 3);
+            this.config.Location = new System.Drawing.Point(0, 0);
             this.config.Name = "config";
-            this.config.Size = new System.Drawing.Size(631, 305);
+            this.config.Size = new System.Drawing.Size(656, 340);
             this.config.TabIndex = 0;
             this.config.ToolbarVisible = false;
             this.config.ViewBackColor = System.Drawing.SystemColors.ScrollBar;
@@ -595,17 +595,17 @@
             this.tabPage_serverInfo.Location = new System.Drawing.Point(4, 22);
             this.tabPage_serverInfo.Name = "tabPage_serverInfo";
             this.tabPage_serverInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_serverInfo.Size = new System.Drawing.Size(637, 341);
+            this.tabPage_serverInfo.Size = new System.Drawing.Size(656, 365);
             this.tabPage_serverInfo.TabIndex = 0;
-            this.tabPage_serverInfo.Text = "服务器信息";
+            this.tabPage_serverInfo.Text = "服务器控制台";
             this.tabPage_serverInfo.UseVisualStyleBackColor = true;
             // 
             // button_serverStop
             // 
             this.button_serverStop.Enabled = false;
-            this.button_serverStop.Location = new System.Drawing.Point(164, 290);
+            this.button_serverStop.Location = new System.Drawing.Point(156, 341);
             this.button_serverStop.Name = "button_serverStop";
-            this.button_serverStop.Size = new System.Drawing.Size(146, 29);
+            this.button_serverStop.Size = new System.Drawing.Size(150, 24);
             this.button_serverStop.TabIndex = 2;
             this.button_serverStop.Text = "关闭服务器";
             this.button_serverStop.UseVisualStyleBackColor = true;
@@ -613,9 +613,9 @@
             // 
             // button_serverClose
             // 
-            this.button_serverClose.Location = new System.Drawing.Point(479, 290);
+            this.button_serverClose.Location = new System.Drawing.Point(506, 341);
             this.button_serverClose.Name = "button_serverClose";
-            this.button_serverClose.Size = new System.Drawing.Size(146, 29);
+            this.button_serverClose.Size = new System.Drawing.Size(150, 24);
             this.button_serverClose.TabIndex = 4;
             this.button_serverClose.Text = "强制关闭服务器";
             this.button_serverClose.UseVisualStyleBackColor = true;
@@ -624,9 +624,9 @@
             // button_serverRest
             // 
             this.button_serverRest.Enabled = false;
-            this.button_serverRest.Location = new System.Drawing.Point(327, 290);
+            this.button_serverRest.Location = new System.Drawing.Point(350, 341);
             this.button_serverRest.Name = "button_serverRest";
-            this.button_serverRest.Size = new System.Drawing.Size(146, 29);
+            this.button_serverRest.Size = new System.Drawing.Size(150, 24);
             this.button_serverRest.TabIndex = 3;
             this.button_serverRest.Text = "重启服务器";
             this.button_serverRest.UseVisualStyleBackColor = true;
@@ -634,9 +634,9 @@
             // 
             // button_serverRun
             // 
-            this.button_serverRun.Location = new System.Drawing.Point(12, 290);
+            this.button_serverRun.Location = new System.Drawing.Point(0, 341);
             this.button_serverRun.Name = "button_serverRun";
-            this.button_serverRun.Size = new System.Drawing.Size(146, 29);
+            this.button_serverRun.Size = new System.Drawing.Size(150, 24);
             this.button_serverRun.TabIndex = 1;
             this.button_serverRun.Text = "开启服务器";
             this.button_serverRun.UseVisualStyleBackColor = true;
@@ -646,19 +646,19 @@
             // 
             this.groupBox_25.Controls.Add(this.textBox_sendServer);
             this.groupBox_25.Controls.Add(this.textBox_serverInfo);
-            this.groupBox_25.Location = new System.Drawing.Point(6, 3);
+            this.groupBox_25.Location = new System.Drawing.Point(0, 0);
             this.groupBox_25.Name = "groupBox_25";
-            this.groupBox_25.Size = new System.Drawing.Size(625, 281);
+            this.groupBox_25.Size = new System.Drawing.Size(656, 333);
             this.groupBox_25.TabIndex = 0;
             this.groupBox_25.TabStop = false;
-            this.groupBox_25.Text = "服务端信息";
+            this.groupBox_25.Text = "服务端指令台";
             // 
             // textBox_sendServer
             // 
             this.textBox_sendServer.ForeColor = System.Drawing.Color.Gray;
-            this.textBox_sendServer.Location = new System.Drawing.Point(6, 254);
+            this.textBox_sendServer.Location = new System.Drawing.Point(0, 312);
             this.textBox_sendServer.Name = "textBox_sendServer";
-            this.textBox_sendServer.Size = new System.Drawing.Size(613, 21);
+            this.textBox_sendServer.Size = new System.Drawing.Size(656, 21);
             this.textBox_sendServer.TabIndex = 1;
             this.textBox_sendServer.Enter += new System.EventHandler(this.textBox_sendServer_Enter);
             this.textBox_sendServer.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox_sendServer_KeyUp);
@@ -666,12 +666,12 @@
             // 
             // textBox_serverInfo
             // 
-            this.textBox_serverInfo.Location = new System.Drawing.Point(6, 20);
+            this.textBox_serverInfo.Location = new System.Drawing.Point(0, 20);
             this.textBox_serverInfo.Multiline = true;
             this.textBox_serverInfo.Name = "textBox_serverInfo";
             this.textBox_serverInfo.ReadOnly = true;
             this.textBox_serverInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_serverInfo.Size = new System.Drawing.Size(613, 228);
+            this.textBox_serverInfo.Size = new System.Drawing.Size(656, 286);
             this.textBox_serverInfo.TabIndex = 0;
             // 
             // tabControl1
@@ -682,10 +682,10 @@
             this.tabControl1.Controls.Add(this.tabPage_serverMod);
             this.tabControl1.Controls.Add(this.tabPage_serverTask);
             this.tabControl1.Controls.Add(this.tabPage_Server);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(-2, -2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(645, 367);
+            this.tabControl1.Size = new System.Drawing.Size(664, 391);
             this.tabControl1.TabIndex = 1;
             this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_SelectingAsync);
             // 
@@ -705,7 +705,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(669, 391);
+            this.ClientSize = new System.Drawing.Size(661, 387);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = global::Minecraft_Server_QQ.Properties.Resources.Color_yr;

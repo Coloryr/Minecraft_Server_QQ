@@ -3,16 +3,16 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
-namespace Minecraft_Server_QQ
+namespace Minecraft_Server_QQ.Config
 {
-    class config_write
+    class Config_write
     {
         /// <summary>
         /// 写服务器列表
         /// </summary>
         /// <param name="path">文件(包含路径)</param>
         /// <param name="obj">服务器储存</param>
-        public static void write_server(string path, server_save obj)
+        public static void write_server(string path, Config_class obj)
         {
             if (File.Exists(path) == false)
                 XML.CreateFile(path, 0);
@@ -105,7 +105,12 @@ namespace Minecraft_Server_QQ
                 }
             }
         }
-        public static void delete_server(string path, server_save obj)
+        /// <summary>
+        /// 删除服务器列表
+        /// </summary>
+        /// <param name="path">文件(包含路径)</param>
+        /// <param name="obj">服务器储存</param>
+        public static void delete_server(string path, Config_class obj)
         {
             if (File.Exists(path) == false)
                 XML.CreateFile(path, 0);

@@ -1,11 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
 
-namespace Minecraft_Server_QQ
+namespace Minecraft_Server_QQ.Config
 {
     //服务器设置相关类，用在propertyGrid控件上
-    class MCServerSet
+    class Propertie_Set
     {
         /// <summary>
         /// 主城保护范围（格）

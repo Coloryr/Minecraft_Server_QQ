@@ -1,11 +1,8 @@
 ﻿using ICSharpCode.SharpZipLib.Zip;
+using Minecraft_Server_QQ.Utils;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YamlDotNet.RepresentationModel;
 
@@ -112,18 +109,16 @@ namespace Minecraft_Server_QQ
                 stream = zip.GetInputStream(zp);
                 TextReader reader = new StreamReader(stream);
                 string text = reader.ReadToEnd();
-                /*
                 JObject json = JObject.Parse(text);
                 if (json.ContainsKey("modList"))
                 {
                     string a = json["modList"].First.ToString();
                     JObject modinfo = JObject.Parse(a);
-                    save.name = a["name"];
-                    save.version = a["version"];
-                    save.auth = a["authorList"];
+                    save.name = modinfo["name"].ToString();
+                    save.version = modinfo["version"].ToString();
+                    save.auth = modinfo["authorList"].ToString();
                     save.file = zip.Name;
                 }
-                */
                 zip.Close();
                 stream.Close();
                 return save;

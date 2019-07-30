@@ -1,10 +1,6 @@
-﻿using System;
+﻿using Minecraft_Server_QQ.Config;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,10 +15,10 @@ namespace Minecraft_Server_QQ
         }
         private void APP_Closing(object sender, FormClosingEventArgs e)
         {
-            if (config_file.server_list.Count != 0)
+            if (Config_file.server_list.Count != 0)
             {
-                Dictionary<string, server_save>.ValueCollection servers = config_file.server_list.Values;
-                foreach (server_save server in servers)
+                Dictionary<string, Config_class>.ValueCollection servers = Config_file.server_list.Values;
+                foreach (Config_class server in servers)
                 {
                     Task.Factory.StartNew(() =>
                     {
@@ -74,8 +70,8 @@ namespace Minecraft_Server_QQ
                         Action<int> action = (data) =>
                         {
                             listServer.Items.Clear();
-                            Dictionary<string, server_save>.ValueCollection servers = config_file.server_list.Values;
-                            foreach (server_save server in servers)
+                            Dictionary<string, Config_class>.ValueCollection servers = Config_file.server_list.Values;
+                            foreach (Config_class server in servers)
                             {
                                 ListViewItem test = new ListViewItem(server.server_name);
                                 if (server.Server != null)
@@ -102,6 +98,7 @@ namespace Minecraft_Server_QQ
                         Invoke(action, 0);
                         Start.updata = false;
                     }
+                    Thread.Sleep(10);
                 }
             });
         }
@@ -115,9 +112,9 @@ namespace Minecraft_Server_QQ
         {
             if (listServer.SelectedItems.Count == 0)
                 MessageBox.Show("请选择一个服务器");
-            else if (config_file.server_list.ContainsKey(listServer.SelectedItems[0].Text))
+            else if (Config_file.server_list.ContainsKey(listServer.SelectedItems[0].Text))
             {
-                server_save server = config_file.server_list[listServer.SelectedItems[0].Text];
+                Config_class server = Config_file.server_list[listServer.SelectedItems[0].Text];
                 if (server.Server == null && server.form == null)
                 {
                     server.form = new Window_Main(server);
@@ -132,12 +129,12 @@ namespace Minecraft_Server_QQ
         {
             if (listServer.SelectedItems.Count == 0)
                 MessageBox.Show("请选择一个服务器");
-            else if (config_file.server_list.ContainsKey(listServer.SelectedItems[0].Text))
+            else if (Config_file.server_list.ContainsKey(listServer.SelectedItems[0].Text))
             {
-                server_save server = config_file.server_list[listServer.SelectedItems[0].Text];
+                Config_class server = Config_file.server_list[listServer.SelectedItems[0].Text];
                 if (server.Server == null && server.form == null)
                 {
-                    config_write.delete_server(Start.APP_local + config_file.server, server);
+                    Config_write.delete_server(Start.APP_local + Config_file.server, server);
                 }
                 else if(server.Server.IsProcessRun() == true)
                 {
@@ -161,7 +158,7 @@ namespace Minecraft_Server_QQ
                         }
                     }
                 }
-                config_file.server_list.Remove(server.server_name);
+                Config_file.server_list.Remove(server.server_name);
                 Start.updata = true;
             }
         }

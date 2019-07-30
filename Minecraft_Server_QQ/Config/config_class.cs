@@ -1,8 +1,9 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
-namespace Minecraft_Server_QQ
+namespace Minecraft_Server_QQ.Config
 {
-    class server_save
+    class Config_class
     {
         /// <summary>
         /// 服务器名字
@@ -62,27 +63,13 @@ namespace Minecraft_Server_QQ
         /// </summary>
         public MCSTask Task_list;//计划任务对象
 
-
-        /// <summary>
-        /// 服务器事件
-        /// </summary>
-        public delegate void serverEventHandler(object sender, Event.MCSEvent e);
-        /// <summary>
-        /// 服务器事件
-        /// </summary>
-        public delegate void opEventHandler(object sender, object var);
-
         /// <summary>
         /// 存放已发送指令
         /// </summary>
-        public string[] line = new string[LINEMAX];
+        public List<string> Commder_line = new List<string> { };
         /// <summary>
         /// 位置
         /// </summary>
-        public int wz;
-        /// <summary>
-        /// 内部存储指令最大数量
-        /// </summary>
-        public const int LINEMAX = 10;//内部存储指令最大数量
+        public int Commder_line_now = 0;
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Minecraft_Server_QQ
+namespace Minecraft_Server_QQ.Config
 {
-    class config_file
+    class Config_file
     {
         /// <summary>
         /// 服务器列表文件
@@ -11,6 +11,6 @@ namespace Minecraft_Server_QQ
         /// <summary>
         /// 服务器数据储存
         /// </summary>
-        public static Dictionary<string, server_save> server_list = new Dictionary<string, server_save> { };
+        public static Dictionary<string, Config_class> server_list = new Dictionary<string, Config_class> { };
     }
 }

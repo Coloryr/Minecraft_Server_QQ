@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Net.NetworkInformation;
-using System.Net;
-using System.IO;
-using ICSharpCode.SharpZipLib.Zip;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
-using YamlDotNet.RepresentationModel;
 
-namespace Minecraft_Server_QQ
+namespace Minecraft_Server_QQ.Utils
 {
     //这个类存放一些杂七杂八的需要的小功能合集
     class other

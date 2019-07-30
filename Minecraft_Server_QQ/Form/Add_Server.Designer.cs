@@ -69,18 +69,18 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.server_local);
-            this.groupBox1.Location = new System.Drawing.Point(6, 33);
+            this.groupBox1.Location = new System.Drawing.Point(0, 24);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(408, 132);
+            this.groupBox1.Size = new System.Drawing.Size(419, 120);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器设置";
             // 
             // button_server_core
             // 
-            this.button_server_core.Location = new System.Drawing.Point(281, 102);
+            this.button_server_core.Location = new System.Drawing.Point(269, 95);
             this.button_server_core.Name = "button_server_core";
-            this.button_server_core.Size = new System.Drawing.Size(121, 24);
+            this.button_server_core.Size = new System.Drawing.Size(150, 24);
             this.button_server_core.TabIndex = 6;
             this.button_server_core.Text = "选择服务器核心";
             this.button_server_core.UseVisualStyleBackColor = true;
@@ -88,15 +88,15 @@
             // 
             // server_core
             // 
-            this.server_core.Location = new System.Drawing.Point(101, 47);
+            this.server_core.Location = new System.Drawing.Point(99, 41);
             this.server_core.Name = "server_core";
-            this.server_core.Size = new System.Drawing.Size(301, 21);
+            this.server_core.Size = new System.Drawing.Size(320, 21);
             this.server_core.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 50);
+            this.label3.Location = new System.Drawing.Point(4, 44);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 4;
@@ -104,16 +104,16 @@
             // 
             // server_arg
             // 
-            this.server_arg.Location = new System.Drawing.Point(101, 74);
+            this.server_arg.Location = new System.Drawing.Point(99, 68);
             this.server_arg.Name = "server_arg";
-            this.server_arg.Size = new System.Drawing.Size(301, 21);
+            this.server_arg.Size = new System.Drawing.Size(320, 21);
             this.server_arg.TabIndex = 3;
             this.server_arg.Text = "nogui";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 77);
+            this.label2.Location = new System.Drawing.Point(4, 71);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 12);
             this.label2.TabIndex = 2;
@@ -122,7 +122,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 23);
+            this.label1.Location = new System.Drawing.Point(6, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 1;
@@ -130,15 +130,15 @@
             // 
             // server_local
             // 
-            this.server_local.Location = new System.Drawing.Point(101, 20);
+            this.server_local.Location = new System.Drawing.Point(99, 14);
             this.server_local.Name = "server_local";
-            this.server_local.Size = new System.Drawing.Size(301, 21);
+            this.server_local.Size = new System.Drawing.Size(320, 21);
             this.server_local.TabIndex = 0;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 9);
+            this.label4.Location = new System.Drawing.Point(6, 4);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 1;
@@ -146,9 +146,9 @@
             // 
             // server_name
             // 
-            this.server_name.Location = new System.Drawing.Point(75, 6);
+            this.server_name.Location = new System.Drawing.Point(75, 1);
             this.server_name.Name = "server_name";
-            this.server_name.Size = new System.Drawing.Size(333, 21);
+            this.server_name.Size = new System.Drawing.Size(344, 21);
             this.server_name.TabIndex = 8;
             this.server_name.Text = "server1";
             // 
@@ -164,18 +164,18 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.java_local);
-            this.groupBox2.Location = new System.Drawing.Point(6, 171);
+            this.groupBox2.Location = new System.Drawing.Point(0, 150);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(408, 133);
+            this.groupBox2.Size = new System.Drawing.Size(419, 126);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "JAVA设置";
             // 
             // button_java_auto
             // 
-            this.button_java_auto.Location = new System.Drawing.Point(154, 103);
+            this.button_java_auto.Location = new System.Drawing.Point(113, 101);
             this.button_java_auto.Name = "button_java_auto";
-            this.button_java_auto.Size = new System.Drawing.Size(121, 24);
+            this.button_java_auto.Size = new System.Drawing.Size(150, 24);
             this.button_java_auto.TabIndex = 13;
             this.button_java_auto.Text = "自动查找JAVA";
             this.button_java_auto.UseVisualStyleBackColor = true;
@@ -235,9 +235,9 @@
             // 
             // button_java
             // 
-            this.button_java.Location = new System.Drawing.Point(281, 103);
+            this.button_java.Location = new System.Drawing.Point(269, 101);
             this.button_java.Name = "button_java";
-            this.button_java.Size = new System.Drawing.Size(121, 24);
+            this.button_java.Size = new System.Drawing.Size(150, 24);
             this.button_java.TabIndex = 6;
             this.button_java.Text = "选择JAVA";
             this.button_java.UseVisualStyleBackColor = true;
@@ -247,7 +247,7 @@
             // 
             this.java_arg.Location = new System.Drawing.Point(101, 47);
             this.java_arg.Name = "java_arg";
-            this.java_arg.Size = new System.Drawing.Size(301, 21);
+            this.java_arg.Size = new System.Drawing.Size(318, 21);
             this.java_arg.TabIndex = 3;
             this.java_arg.Text = "-server";
             // 
@@ -273,7 +273,7 @@
             // 
             this.java_local.Location = new System.Drawing.Point(101, 20);
             this.java_local.Name = "java_local";
-            this.java_local.Size = new System.Drawing.Size(301, 21);
+            this.java_local.Size = new System.Drawing.Size(318, 21);
             this.java_local.TabIndex = 0;
             // 
             // java_local_chose
@@ -284,9 +284,9 @@
             // 
             // button_add
             // 
-            this.button_add.Location = new System.Drawing.Point(287, 310);
+            this.button_add.Location = new System.Drawing.Point(269, 281);
             this.button_add.Name = "button_add";
-            this.button_add.Size = new System.Drawing.Size(121, 24);
+            this.button_add.Size = new System.Drawing.Size(150, 24);
             this.button_add.TabIndex = 13;
             this.button_add.Text = "添加服务器";
             this.button_add.UseVisualStyleBackColor = true;
@@ -300,7 +300,7 @@
             // auto_restart
             // 
             this.auto_restart.AutoSize = true;
-            this.auto_restart.Location = new System.Drawing.Point(6, 310);
+            this.auto_restart.Location = new System.Drawing.Point(6, 286);
             this.auto_restart.Name = "auto_restart";
             this.auto_restart.Size = new System.Drawing.Size(96, 16);
             this.auto_restart.TabIndex = 14;
@@ -310,7 +310,7 @@
             // open_start
             // 
             this.open_start.AutoSize = true;
-            this.open_start.Location = new System.Drawing.Point(107, 310);
+            this.open_start.Location = new System.Drawing.Point(114, 286);
             this.open_start.Name = "open_start";
             this.open_start.Size = new System.Drawing.Size(120, 16);
             this.open_start.TabIndex = 15;
@@ -321,7 +321,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(420, 338);
+            this.ClientSize = new System.Drawing.Size(420, 305);
             this.Controls.Add(this.open_start);
             this.Controls.Add(this.auto_restart);
             this.Controls.Add(this.button_add);

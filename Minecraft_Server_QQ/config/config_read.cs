@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Minecraft_Server_QQ
+namespace Minecraft_Server_QQ.Config
 {
-    class config_read
+    class Config_read
     {
         /// <summary>
         /// 读取服务器列表
@@ -15,7 +15,7 @@ namespace Minecraft_Server_QQ
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.Load(path);
             XmlNodeList nodeList = xmldoc.SelectSingleNode("config").ChildNodes;
-            config_file.server_list.Clear();
+            Config_file.server_list.Clear();
             foreach (XmlNode xn in nodeList)//遍历所有子节点
             {
                 XmlNode server_name = xn.SelectSingleNode("服务器名字");
@@ -31,8 +31,8 @@ namespace Minecraft_Server_QQ
                 if (server_name != null && server_core != null && server_local != null
                     && server_arg != null && java_local != null)
                 {
-                    server_save server = new server_save();
-                    if (config_file.server_list.ContainsKey(server_name.InnerText) == false)
+                    Config_class server = new Config_class();
+                    if (Config_file.server_list.ContainsKey(server_name.InnerText) == false)
                     {
                         server.server_name = server_name.InnerXml;
                         server.server_local = server_local.InnerXml;
@@ -44,7 +44,7 @@ namespace Minecraft_Server_QQ
                         server.open_start = open_start.InnerText == "开" ? true : false;
                         int.TryParse(max_m.InnerText, out server.max_m);
                         int.TryParse(min_m.InnerText, out server.min_m);
-                        config_file.server_list.Add(server.server_name, server);
+                        Config_file.server_list.Add(server.server_name, server);
                     }
                 }
             }

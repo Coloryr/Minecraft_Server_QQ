@@ -86,7 +86,6 @@ namespace Minecraft_Server_QQ
                 }
             }
         }
-
         /// <summary>
         /// 查询
         /// </summary>
@@ -110,20 +109,6 @@ namespace Minecraft_Server_QQ
             catch (Exception)
             { }
             return temp;
-        }
-
-        public static bool read_id_memory(string file, string id)
-        {
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.LoadXml(file);
-            XmlNodeList nodeList = xmldoc.SelectSingleNode("config").ChildNodes;
-            foreach (XmlNode xn in nodeList)//遍历所有子节点
-            {
-                XmlNode xnLurl = xn.SelectSingleNode("绑定");
-                if (xnLurl != null && xnLurl.FirstChild.InnerText == id)
-                    return true;
-            }
-            return false;
         }
     }
 }

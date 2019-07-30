@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Minecraft_Server_QQ.Config;
+using Minecraft_Server_QQ.Mc_server;
+using Minecraft_Server_QQ.Utils;
+using System;
 using System.Drawing;
-using System.Windows.Forms;
 using System.IO;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using static Minecraft_Server_QQ.WinAPI;
+using System.Windows.Forms;
 
 namespace Minecraft_Server_QQ
 {
     partial class Window_Main : Form
     {
-        private server_save server_save;
+        private Config_class server_save;
         private bool plugins_run = false;
         private bool mods_run = false;
 
@@ -25,7 +26,7 @@ namespace Minecraft_Server_QQ
         {
 
         }//显示信息线程，用于显示包括版本信息，开服后的内存信息等，并且负责软件开启后自动更新DNS 
-        public Window_Main(server_save server)
+        public Window_Main(Config_class server)
         {
             this.server_save = server;
             InitializeComponent();
@@ -46,9 +47,9 @@ namespace Minecraft_Server_QQ
                 new Thread(th_showInfo).Start();
             }
             Name = server_save.server_name + "监视窗口";
-            MEMORYSTATUS1 vBuffer = new MEMORYSTATUS1();//实例化结构  
+            WinAPI.MEMORYSTATUS1 vBuffer = new WinAPI.MEMORYSTATUS1();//实例化结构  
             vBuffer.dwLength = 64;
-            GlobalMemoryStatusEx(ref vBuffer);//给此结构赋值搜索            
+            WinAPI.GlobalMemoryStatusEx(ref vBuffer);//给此结构赋值搜索            
             long max_m = vBuffer.ullTotalPhys / 1024 / 1024;
             java_max.Maximum = max_m;
             java_min.Maximum = max_m;
@@ -77,9 +78,9 @@ namespace Minecraft_Server_QQ
         //事件-服务器被关闭
         void Server_serverStop(object sender, Event.MCSEvent e)
         {
-            button_serverRun.Invoke(new server_save.opEventHandler(safe_opButton),new object[]{button_serverRun,true});
-            button_serverStop.Invoke(new server_save.opEventHandler(safe_opButton), new object[]{button_serverStop,false});
-            button_serverRest.Invoke(new server_save.opEventHandler(safe_opButton),new object[]{button_serverRest,false});
+            button_serverRun.Invoke(new MCServer_API.opEventHandler(safe_opButton),new object[]{button_serverRun,true});
+            button_serverStop.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[]{button_serverStop,false});
+            button_serverRest.Invoke(new MCServer_API.opEventHandler(safe_opButton),new object[]{button_serverRest,false});
             if (e != null)
             {
                 if (e.exitCode == 0)
@@ -92,15 +93,15 @@ namespace Minecraft_Server_QQ
         //事件-服务器重启完毕
         void Server_serverRestart(object sender, Event.MCSEvent e)
         {
-            button_serverRun.Invoke(new server_save.opEventHandler(safe_opButton), new object[] { button_serverRun ,false});
-            button_serverStop.Invoke(new server_save.opEventHandler(safe_opButton), new object[] { button_serverStop, true });
-            button_serverRest.Invoke(new server_save.opEventHandler(safe_opButton), new object[] { button_serverRest, true });
+            button_serverRun.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverRun ,false});
+            button_serverStop.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverStop, true });
+            button_serverRest.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverRest, true });
         }
         //事件-服务器回显消息通知
         void Server_serverMessage(object sender, Event.MCSEvent e)
         {
             if (textBox_serverInfo.InvokeRequired)
-                Invoke(new server_save.serverEventHandler(Server_serverMessage), new object[] { sender, e });
+                Invoke(new MCServer_API.serverEventHandler(Server_serverMessage), new object[] { sender, e });
             else
             {
                 if (textBox_serverInfo.Text.Length >= 30000)
@@ -126,7 +127,7 @@ namespace Minecraft_Server_QQ
                 return;
             }
             //创建eula.txt
-            config_mcserver config = new config_mcserver();
+            Config_properties config = new Config_properties();
             if (!File.Exists(server_save.server_local + "eula.txt"))
             {
                 if (MessageBox.Show("EULA文件缺失，是否同意MOJANG EULA", "EULA", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -169,9 +170,9 @@ namespace Minecraft_Server_QQ
             }
             logs.Log_write("启动服务器：" + cmd);
             //进程创建成功
-            button_serverRun.Invoke(new server_save.opEventHandler(safe_opButton), new object[] { button_serverRun, false });
-            button_serverStop.Invoke(new server_save.opEventHandler(safe_opButton), new object[] { button_serverStop, true });
-            button_serverRest.Invoke(new server_save.opEventHandler(safe_opButton), new object[] { button_serverRest, true });
+            button_serverRun.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverRun, false });
+            button_serverStop.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverStop, true });
+            button_serverRest.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverRest, true });
         }
         //关闭服务器
         private void button_serverStop_Click(object sender, EventArgs e)
@@ -187,9 +188,9 @@ namespace Minecraft_Server_QQ
                 return;
             }
             server_save.Server.Restart();
-            button_serverRun.Invoke(new server_save.opEventHandler(safe_opButton), new object[] {button_serverRun,false});
-            button_serverStop.Invoke(new server_save.opEventHandler(safe_opButton),new object[]{button_serverStop,false});
-            button_serverRest.Invoke(new server_save.opEventHandler(safe_opButton),new object[]{button_serverRest,false});
+            button_serverRun.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] {button_serverRun,false});
+            button_serverStop.Invoke(new MCServer_API.opEventHandler(safe_opButton),new object[]{button_serverStop,false});
+            button_serverRest.Invoke(new MCServer_API.opEventHandler(safe_opButton),new object[]{button_serverRest,false});
     
         }
         //强制关闭服务器
@@ -221,64 +222,42 @@ namespace Minecraft_Server_QQ
         {
             if (e.KeyCode == Keys.Return)
             {
-                server_save.wz = -1;
-                foreach (string s in server_save.line)
+                server_save.Commder_line_now = -1;
+                string now = textBox_sendServer.Text;
+                if (string.IsNullOrWhiteSpace(now))
+                    return;
+                //输入的指令是最后一个
+                if (server_save.Commder_line[server_save.Commder_line.Count] == now)
                 {
-                    server_save.wz++;
-                    if (s == "" || s == null)
-                        break;
-                }//计算出最后的位置
-                server_save.wz++;
-                server_save.Server.SendMessage(textBox_sendServer.Text);
-                if (server_save.wz == 1)
-                {
-                    server_save.line[0] = textBox_sendServer.Text;
+                    //不记录发送
+                    server_save.Commder_line_now = server_save.Commder_line.Count;
+                    server_save.Server.SendMessage(textBox_sendServer.Text);
+                    return;
                 }
                 else
                 {
-                    if (server_save.line[server_save.wz - 2] != textBox_sendServer.Text)
-                    {
-                        //将指令加入line数组
-                        if (server_save.wz != server_save.LINEMAX)
-                        {
-                            server_save.line[server_save.wz - 1] = textBox_sendServer.Text;
-                        }
-                        else
-                        {
-                            server_save.line[server_save.wz - 1] = textBox_sendServer.Text;
-                            ArrShangYi(server_save.line);
-                            server_save.wz--;
-                        }
-                    }
-                    else 
-                    {
-                        server_save.wz--;
-                    }
+                    server_save.Commder_line.Add(now);
+                    server_save.Commder_line_now = server_save.Commder_line.Count;
                 }
-                textBox_sendServer.Text = "";
             }
-            if (e.KeyCode == Keys.Up)
+            else if (server_save.Commder_line.Count == 0)
+                return;
+            else if(e.KeyCode == Keys.Up)
             {
-                if (server_save.wz != 0)
-                    server_save.wz--;
-                textBox_sendServer.Text= server_save.line[server_save.wz];
+                if (server_save.Commder_line_now != 0)
+                    server_save.Commder_line_now--;
+                else
+                    return;
+                textBox_sendServer.Text= server_save.Commder_line[server_save.Commder_line_now];
             }
-            if (e.KeyCode == Keys.Down)
+            else if(e.KeyCode == Keys.Down)
             {
-                if (server_save.wz < server_save.LINEMAX -1)
-                    server_save.wz++;
-                textBox_sendServer.Text = server_save.line[server_save.wz];
+                if (server_save.Commder_line_now < server_save.Commder_line.Count)
+                    server_save.Commder_line_now++;
+                else
+                    return;
+                textBox_sendServer.Text = server_save.Commder_line[server_save.Commder_line_now];
             }
-        }
-        private void ArrShangYi(string[] s)
-        {
-            string[] tmp = new string[server_save.LINEMAX];
-            s.CopyTo(tmp, 0);
-            for (int i = 0; i < server_save.LINEMAX -1; i++)
-            {
-                s[i] = tmp[i + 1];
-            }
-            s[server_save.LINEMAX - 1] = null;
         }
         //选项卡被选择
         private void tabControl1_SelectingAsync(object sender, TabControlCancelEventArgs e)
@@ -356,7 +335,7 @@ namespace Minecraft_Server_QQ
         private void button_saveServerSet_Click(object sender, EventArgs e)
         {
             server server = new server();
-            if (server.SaveMCServerConfig(server_save, (MCServerSet)config.SelectedObject))
+            if (server.SaveMCServerConfig(server_save, (Propertie_Set)config.SelectedObject))
                 MessageBox.Show("保存设置成功");
             else
                 MessageBox.Show("保存设置失败，请检查服务器设置文件是否被占用。");
@@ -386,10 +365,10 @@ namespace Minecraft_Server_QQ
             server_save.max_m = (int)java_max.Value;
             server_save.auto_restart = auto_restart.Checked;
             server_save.open_start = open_start.Checked;
-            config_write.write_server(Start.APP_local + config_file.server, server_save);
-            if (config_file.server_list.ContainsKey(a) == true)
-                config_file.server_list.Remove(a);
-            config_file.server_list.Add(server_save.server_name, server_save);
+            Config_write.write_server(Start.APP_local + Config_file.server, server_save);
+            if (Config_file.server_list.ContainsKey(a) == true)
+                Config_file.server_list.Remove(a);
+            Config_file.server_list.Add(server_save.server_name, server_save);
             Start.updata = true;
         }
 
