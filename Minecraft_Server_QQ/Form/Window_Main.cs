@@ -302,15 +302,20 @@ namespace Minecraft_Server_QQ
                     plugin_mod_list list = mod.ReadModInfo(server_save.server_local);
                     if (list != null)
                     {
-                        listView_plugins.Items.Clear();
-                        foreach (plugin_mod_save save in list.list)
+                        Action<int> action = (data) =>
                         {
-                            ListViewItem test = new ListViewItem(save.name);
-                            test.SubItems.Add(save.version);
-                            test.SubItems.Add(save.auth);
-                            test.SubItems.Add(save.file);
-                            listView_mods.Items.Add(test);
-                        }
+                            listView_mods.Items.Clear();
+                            foreach (plugin_mod_save save in list.list)
+                            {
+                                ListViewItem test = new ListViewItem(save.name);
+                                test.SubItems.Add(save.version);
+                                test.SubItems.Add(save.auth);
+                                test.SubItems.Add(save.file);
+                                listView_mods.Items.Add(test);
+
+                            }
+                        };
+                        Invoke(action, 0);
                     }
                     mods_run = false;
                 });

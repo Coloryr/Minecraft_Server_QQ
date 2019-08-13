@@ -109,22 +109,47 @@ namespace Minecraft_Server_QQ
                 stream = zip.GetInputStream(zp);
                 TextReader reader = new StreamReader(stream);
                 string text = reader.ReadToEnd();
-                JObject json = JObject.Parse(text);
-                if (json.ContainsKey("modList"))
+                if (text.IndexOf("[{") == 0)
                 {
-                    string a = json["modList"].First.ToString();
-                    JObject modinfo = JObject.Parse(a);
-                    save.name = modinfo["name"].ToString();
-                    save.version = modinfo["version"].ToString();
-                    save.auth = modinfo["authorList"].ToString();
-                    save.file = zip.Name;
+                    text = text.Substring(1, text.Length - 3);
                 }
+                else if (text.IndexOf("[") == 0)
+                {
+                    text = text.Substring(2, text.Length - 4);
+                }
+                else if (text.IndexOf("modList") != -1)
+                {
+                    JObject a = JObject.Parse(text);
+                    string b = a["modList"].ToString();
+                    text = b.Substring(1, b.Length - 3);
+                }
+                JObject json = JObject.Parse(text);
+                if (json.ContainsKey("name"))
+                {
+                    save.name = json["name"].ToString();
+                    if(string.IsNullOrWhiteSpace(save.name))
+                        save.name = fileName.Replace(path + @"mods\", "");
+                }
+                if(json.ContainsKey("version"))
+                { 
+                    save.version = json["version"].ToString();
+                }
+                if (json.ContainsKey("authors"))
+                {
+                    save.auth = json["authors"].ToString();
+                }
+                if (json.ContainsKey("authorList"))
+                {
+                    save.auth += json["authorList"].ToString();
+                }
+                save.file = fileName.Replace(path + @"mods\", "");
                 zip.Close();
                 stream.Close();
                 return save;
             }
             catch (Exception e)
             {
+                save.file = save.name = fileName.Replace(path + @"mods\", "");
                 logs.Log_write("[ERROR]" + e.Message);
                 if (zip != null)
                     zip.Close();
