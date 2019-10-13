@@ -17,12 +17,12 @@ namespace Minecraft_Server_QQ
         {
             if (Config_file.server_list.Count != 0)
             {
-                Dictionary<string, Config_class>.ValueCollection servers = Config_file.server_list.Values;
-                foreach (Config_class server in servers)
+                Dictionary<string, Server_Save>.ValueCollection servers = Config_file.server_list.Values;
+                foreach (Server_Save server in servers)
                 {
                     Task.Factory.StartNew(() =>
                     {
-                        if(server.Task_list != null)
+                        if (server.Task_list != null)
                             server.Task_list.StopTask();
                         if (server.Server != null && server.Server.IsProcessRun() == true)
                         {
@@ -70,10 +70,10 @@ namespace Minecraft_Server_QQ
                         Action<int> action = (data) =>
                         {
                             listServer.Items.Clear();
-                            Dictionary<string, Config_class>.ValueCollection servers = Config_file.server_list.Values;
-                            foreach (Config_class server in servers)
+                            Dictionary<string, Server_Save>.ValueCollection servers = Config_file.server_list.Values;
+                            foreach (Server_Save server in servers)
                             {
-                                ListViewItem test = new ListViewItem(server.server_name);
+                                ListViewItem test = new ListViewItem(server.Config.server_name);
                                 if (server.Server != null)
                                     switch (server.Server.server_now)
                                     {
@@ -89,8 +89,8 @@ namespace Minecraft_Server_QQ
                                     }
                                 else
                                     test.SubItems.Add("关闭");
-                                test.SubItems.Add(server.server_core);
-                                test.SubItems.Add(server.java_arg);
+                                test.SubItems.Add(server.Config.server_core);
+                                test.SubItems.Add(server.Config.java_arg);
                                 listServer.Items.Add(test);
                             }
                             Thread.Sleep(1000);
@@ -114,7 +114,7 @@ namespace Minecraft_Server_QQ
                 MessageBox.Show("请选择一个服务器");
             else if (Config_file.server_list.ContainsKey(listServer.SelectedItems[0].Text))
             {
-                Config_class server = Config_file.server_list[listServer.SelectedItems[0].Text];
+                Server_Save server = Config_file.server_list[listServer.SelectedItems[0].Text];
                 if (server.Server == null && server.form == null)
                 {
                     server.form = new Window_Main(server);
@@ -131,7 +131,7 @@ namespace Minecraft_Server_QQ
                 MessageBox.Show("请选择一个服务器");
             else if (Config_file.server_list.ContainsKey(listServer.SelectedItems[0].Text))
             {
-                Config_class server = Config_file.server_list[listServer.SelectedItems[0].Text];
+                Server_Save server = Config_file.server_list[listServer.SelectedItems[0].Text];
                 if (server.Server == null && server.form == null)
                 {
                     Config_write.delete_server(Start.APP_local + Config_file.server, server);
@@ -158,9 +158,25 @@ namespace Minecraft_Server_QQ
                         }
                     }
                 }
-                Config_file.server_list.Remove(server.server_name);
+                Config_file.server_list.Remove(server.Config.server_name);
                 Start.updata = true;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (Server_Save a in Config_file.server_list.Values)
+            {
+                if (!a.Server.IsProcessRun())
+                { 
+                    
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

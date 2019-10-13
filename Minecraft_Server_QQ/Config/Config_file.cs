@@ -11,6 +11,10 @@ namespace Minecraft_Server_QQ.Config
         /// <summary>
         /// 服务器数据储存
         /// </summary>
-        public static Dictionary<string, Config_class> server_list = new Dictionary<string, Config_class> { };
+        public static Dictionary<string, Server_Save> server_list = new Dictionary<string, Server_Save> { };
+        /// <summary>
+        /// 服务器配置文件储存
+        /// </summary>
+        public static Dictionary<string, Server_Config> server_config_list = new Dictionary<string, Server_Config> { };
     }
 }

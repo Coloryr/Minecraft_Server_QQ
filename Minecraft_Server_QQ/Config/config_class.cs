@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Minecraft_Server_QQ.Config
 {
-    class Config_class
+    class Server_Config
     {
         /// <summary>
         /// 服务器名字
@@ -49,11 +49,13 @@ namespace Minecraft_Server_QQ.Config
         /// </summary>
         public int min_m = 512;
 
+    }
+    class Server_Save 
+    {
         /// <summary>
         /// 窗体
         /// </summary>
         public Form form;
-
         /// <summary>
         /// 这个对象负责核心的开服，回显文本等
         /// </summary>
@@ -61,15 +63,10 @@ namespace Minecraft_Server_QQ.Config
         /// <summary>
         /// 计划任务对象
         /// </summary>
-        public MCSTask Task_list;//计划任务对象
-
+        public MCSTask Task_list;
         /// <summary>
-        /// 存放已发送指令
+        /// 服务器配置储存
         /// </summary>
-        public List<string> Commder_line = new List<string> { };
-        /// <summary>
-        /// 位置
-        /// </summary>
-        public int Commder_line_now = 0;
+        public Server_Config Config;
     }
 }

@@ -2,9 +2,8 @@
 using Minecraft_Server_QQ.Mc_server;
 using Minecraft_Server_QQ.Utils;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,9 +11,19 @@ namespace Minecraft_Server_QQ
 {
     partial class Window_Main : Form
     {
-        private Config_class server_save;
+        private Server_Save server_save;
+
         private bool plugins_run = false;
         private bool mods_run = false;
+
+        /// <summary>
+        /// 存放已发送指令
+        /// </summary>
+        public List<string> Commder_line = new List<string> { };
+        /// <summary>
+        /// 位置
+        /// </summary>
+        public int Commder_line_now = 0;
 
         private void safe_opButton(object sender,object var) 
         {
@@ -22,48 +31,44 @@ namespace Minecraft_Server_QQ
             bool enabled = (bool)var;
             button.Enabled = enabled;
         }//用于多线程下的按钮Enabled属性操作
-        private void th_showInfo() 
-        {
 
-        }//显示信息线程，用于显示包括版本信息，开服后的内存信息等，并且负责软件开启后自动更新DNS 
-        public Window_Main(Config_class server)
+        public Window_Main(Server_Save server)
         {
-            this.server_save = server;
+            server_save = server;
             InitializeComponent();
         }
         //窗口初始化事件
         private void Window_Main_Load(object sender, EventArgs e)
         {
-            if (server_save.Server == null)
-            {
-                server_save.Server = new MCServer(server_save.server_local);
                 server_save.Server.serverMessage += new MCServer.serverEventHandler(Server_serverMessage);
                 server_save.Server.serverRestart += new MCServer.serverEventHandler(Server_serverRestart);
                 server_save.Server.serverStop += new MCServer.serverEventHandler(Server_serverStop);
-                server_save.Task_list = new MCSTask(server_save.Server, Application.StartupPath);
-                server_save.Task_list.ptask += new MCSTask.pTask(Task_ptask);
-                server_save.Task_list.InitTask();
-                server_save.Task_list.StartTask();
-                new Thread(th_showInfo).Start();
-            }
-            Name = server_save.server_name + "监视窗口";
+                //server_save.Task_list = new MCSTask(server_save.Server, Application.StartupPath);
+                //server_save.Task_list.ptask += new MCSTask.pTask(Task_ptask);
+                //server_save.Task_list.InitTask();
+                //server_save.Task_list.StartTask();
+
+            Name = server_save.Config.server_name + "监视窗口";
+
             WinAPI.MEMORYSTATUS1 vBuffer = new WinAPI.MEMORYSTATUS1();//实例化结构  
             vBuffer.dwLength = 64;
-            WinAPI.GlobalMemoryStatusEx(ref vBuffer);//给此结构赋值搜索            
+            WinAPI.GlobalMemoryStatusEx(ref vBuffer);//给此结构赋值搜索    
+            
             long max_m = vBuffer.ullTotalPhys / 1024 / 1024;
+
             java_max.Maximum = max_m;
             java_min.Maximum = max_m;
 
-            server_name.Text = server_save.server_name;
-            server_local.Text = server_save.server_local;
-            server_core.Text = server_save.server_core;
-            server_arg.Text = server_save.server_arg;
-            java_local.Text = server_save.java_local;
-            java_arg.Text = server_save.java_arg;
-            java_min.Value = server_save.min_m;
-            java_max.Value = server_save.max_m;
-            auto_restart.Checked = server_save.auto_restart;
-            open_start.Checked = server_save.open_start;
+            server_name.Text = server_save.Config.server_name;
+            server_local.Text = server_save.Config.server_local;
+            server_core.Text = server_save.Config.server_core;
+            server_arg.Text = server_save.Config.server_arg;
+            java_local.Text = server_save.Config.java_local;
+            java_arg.Text = server_save.Config.java_arg;
+            java_min.Value = server_save.Config.min_m;
+            java_max.Value = server_save.Config.max_m;
+            auto_restart.Checked = server_save.Config.auto_restart;
+            open_start.Checked = server_save.Config.open_start;
         }
         //事件-计划任务应执行 
         void Task_ptask(int s)
@@ -114,70 +119,12 @@ namespace Minecraft_Server_QQ
         //开启服务器按钮被点击
         private void button_serverRun_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(server_save.server_local + server_save.server_core))
-            {
-                MessageBox.Show("服务器核心未找到，请设置为Start.jar");
-                return;
-            }
-            //读取开服所需相关参数并检测，生成启动命令行
-            string javaPath = server_save.java_local;
-            if (string.IsNullOrWhiteSpace(javaPath) || !File.Exists(javaPath))
-            {
-                MessageBox.Show("JAVA错误，请重新设置");
-                return;
-            }
-            //创建eula.txt
-            Config_properties config = new Config_properties();
-            if (!File.Exists(server_save.server_local + "eula.txt"))
-            {
-                if (MessageBox.Show("EULA文件缺失，是否同意MOJANG EULA", "EULA", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    config.Init(server_save.server_local + "eula.txt");
-                    config.SetString("eula", "true");
-                    config.UnInit(true);
-                }
-                else
-                {
-                    MessageBox.Show("你需要同意开服协议才能开服。");
-                    return;
-                }
-            }
-            if (!File.Exists(server_save.server_local + "server.properties"))
-            {
-                //端口检测
-                config.Init(server_save.server_local + "server.properties");
-                int Port = 25565;
-                if (!other.PortInUse(Port))
-                {
-                    MessageBox.Show("服务器端口25565被占用！请关闭占用端口的进程或者重启。");
-                    return;
-                }
-            }
-            //根据配置文件生成相关参数
-            if (server_save.max_m == 0 || server_save.min_m == 0)
-            {
-                MessageBox.Show("内存设置错误");
-                return;
-            }
-            string cmd = string.Format("{0} -Xmx{1}M -Xms{2}M -Djline.terminal=jline.UnsupportedTerminal -jar \"{3}\" {4}",
-                server_save.java_arg, server_save.max_m.ToString(), server_save.min_m.ToString(),
-                server_save.server_local + server_save.server_core, server_save.server_arg);
-            //采用相对路径，避免非中文系统下中文目录导致的开服失败。
-            if (!server_save.Server.Run(javaPath, cmd))
-            {
-                MessageBox.Show("进程创建失败！");
-                return;
-            }
-            logs.Log_write("启动服务器：" + cmd);
-            //进程创建成功
-            button_serverRun.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverRun, false });
-            button_serverStop.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverStop, true });
-            button_serverRest.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverRest, true });
+            server_save.Server.Start_Server();
         }
         //关闭服务器
         private void button_serverStop_Click(object sender, EventArgs e)
         {
-            server_save.Server.Stop();
+            server_save.Server.Stop_Server();
         }
         //重启服务器
         private void button_serverRest_Click(object sender, EventArgs e)
@@ -222,12 +169,17 @@ namespace Minecraft_Server_QQ
         {
             if (e.KeyCode == Keys.Return)
             {
-                server_save.Commder_line_now = -1;
+                Commder_line_now = -1;
                 string now = textBox_sendServer.Text;
                 if (string.IsNullOrWhiteSpace(now))
                     return;
+                if (server_save.Commder_line.Count == 0)
+                {
+                    server_save.Commder_line.Add(now);
+                    server_save.Commder_line_now = server_save.Commder_line.Count;
+                }
                 //输入的指令是最后一个
-                if (server_save.Commder_line[server_save.Commder_line.Count] == now)
+                else if (server_save.Commder_line[server_save.Commder_line.Count] == now)
                 {
                     //不记录发送
                     server_save.Commder_line_now = server_save.Commder_line.Count;

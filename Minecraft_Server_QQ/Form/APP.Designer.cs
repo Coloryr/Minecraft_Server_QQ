@@ -118,8 +118,8 @@
             // server_menu
             // 
             this.server_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.delete_server,
-            this.open_win});
+            this.open_win,
+            this.delete_server});
             this.server_menu.Name = "contextMenuStrip_tuopan";
             this.server_menu.Size = new System.Drawing.Size(137, 48);
             // 
@@ -145,6 +145,7 @@
             this.button1.TabIndex = 3;
             this.button1.Text = "全部开启";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -154,6 +155,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "全部关闭";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button4
             // 

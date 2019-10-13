@@ -31,7 +31,7 @@ namespace Minecraft_Server_QQ.Config
                 if (server_name != null && server_core != null && server_local != null
                     && server_arg != null && java_local != null)
                 {
-                    Config_class server = new Config_class();
+                    Server_Config server = new Server_Config();
                     if (Config_file.server_list.ContainsKey(server_name.InnerText) == false)
                     {
                         server.server_name = server_name.InnerXml;
@@ -44,7 +44,7 @@ namespace Minecraft_Server_QQ.Config
                         server.open_start = open_start.InnerText == "开" ? true : false;
                         int.TryParse(max_m.InnerText, out server.max_m);
                         int.TryParse(min_m.InnerText, out server.min_m);
-                        Config_file.server_list.Add(server.server_name, server);
+                        Config_file.server_config_list.Add(server.server_name, server);
                     }
                 }
             }

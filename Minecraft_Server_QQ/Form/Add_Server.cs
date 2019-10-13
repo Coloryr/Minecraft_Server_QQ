@@ -45,15 +45,15 @@ namespace Minecraft_Server_QQ
                 MessageBox.Show("参数缺少，请检查");
                 return;
             }
-            Dictionary<string, Config_class>.ValueCollection temp = Config_file.server_list.Values;
-            foreach (Config_class a in temp)
+            Dictionary<string, Server_Save>.ValueCollection temp = Config_file.server_list.Values;
+            foreach (Server_Save a in temp)
             {
-                if (a.server_name == server_name.Text)
+                if (a.Config.server_name == server_name.Text)
                 {
                     MessageBox.Show("服务器名已存在，请更换");
                     return;
                 }
-                else if (a.server_local == server_local.Text)
+                else if (a.Config.server_local == server_local.Text)
                 {
                     MessageBox.Show("服务器名已存在，请更换");
                     return;
@@ -61,18 +61,23 @@ namespace Minecraft_Server_QQ
             }
             try
             {
-                Config_class server = new Config_class();
-                server.server_name = server_name.Text;
-                server.server_local = server_local.Text;
-                server.server_core = server_core.Text;
-                server.java_local = java_local.Text;
-                server.java_arg = java_arg.Text;
-                server.auto_restart = auto_restart.Checked;
-                server.open_start = open_start.Checked;
-                server.min_m = (int)java_min.Value;
-                server.max_m = (int)java_max.Value;
+                Server_Save server = new Server_Save()
+                {
+                    Config = new Server_Config()
+                    {
+                        server_name = server_name.Text,
+                        server_local = server_local.Text,
+                        server_core = server_core.Text,
+                        java_local = java_local.Text,
+                        java_arg = java_arg.Text,
+                        auto_restart = auto_restart.Checked,
+                        open_start = open_start.Checked,
+                        min_m = (int)java_min.Value,
+                        max_m = (int)java_max.Value
+                    }
+                };
                 Config_write.write_server(Start.APP_local + Config_file.server, server);
-                Config_file.server_list.Add(server.server_name, server);
+                Config_file.server_list.Add(server.Config.server_name, server);
                 MessageBox.Show("已添加");
                 Start.updata = true;
                 Close();

@@ -10,7 +10,7 @@ namespace Minecraft_Server_QQ.Mc_server
         /// </summary>
         /// <param name="path">文件(包含路径)</param>
         /// <param name="obj">服务器储存</param>
-        public Propertie_Set ReadMCServerConfig(Config_class server)//读取并设置服务器设置界面内容
+        public Propertie_Set ReadMCServerConfig(Server_Config server)//读取并设置服务器设置界面内容
         {
             Config_properties config = new Config_properties();
             Propertie_Set tmpObject = new Propertie_Set();
@@ -117,7 +117,7 @@ namespace Minecraft_Server_QQ.Mc_server
             return tmpObject;
 
         }
-        public bool SaveMCServerConfig(Config_class server, Propertie_Set tmpObj)
+        public bool SaveMCServerConfig(Server_Config server, Propertie_Set tmpObj)
         {
             if (tmpObj != null)
             {
@@ -171,7 +171,7 @@ namespace Minecraft_Server_QQ.Mc_server
             }
             return false;
         }
-        public void ReadTaskInfo(Config_class server)
+        public void ReadTaskInfo(Server_Config server)
         {
             /*
             //因为读取很快所以就不需要像Mod和插件哪样使用多线程了

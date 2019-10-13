@@ -12,7 +12,7 @@ namespace Minecraft_Server_QQ.Config
         /// </summary>
         /// <param name="path">文件(包含路径)</param>
         /// <param name="obj">服务器储存</param>
-        public static void write_server(string path, Config_class obj)
+        public static void write_server(string path, Server_Save obj)
         {
             if (File.Exists(path) == false)
                 XML.CreateFile(path, 0);
@@ -28,26 +28,26 @@ namespace Minecraft_Server_QQ.Config
                     if (xn.Name == "服务器列表")
                     {
                         XmlNode xnLurl = xn.SelectSingleNode("服务器名字");
-                        if (xnLurl.InnerText == obj.server_name)
+                        if (xnLurl.InnerText == obj.Config.server_name)
                         {
                             xnLurl = xn.SelectSingleNode("服务端路径");
-                            xnLurl.InnerText = obj.server_local;
+                            xnLurl.InnerText = obj.Config.server_local;
                             xnLurl = xn.SelectSingleNode("服务端核心");
-                            xnLurl.InnerText = obj.server_core;
+                            xnLurl.InnerText = obj.Config.server_core;
                             xnLurl = xn.SelectSingleNode("服务器参数");
-                            xnLurl.InnerText = obj.server_arg;
+                            xnLurl.InnerText = obj.Config.server_arg;
                             xnLurl = xn.SelectSingleNode("JAVA路径");
-                            xnLurl.InnerText = obj.java_local;
+                            xnLurl.InnerText = obj.Config.java_local;
                             xnLurl = xn.SelectSingleNode("JAVA参数");
-                            xnLurl.InnerText = obj.java_arg;
+                            xnLurl.InnerText = obj.Config.java_arg;
                             xnLurl = xn.SelectSingleNode("自动重启");
-                            xnLurl.InnerText = obj.auto_restart ? "开" : "关";
+                            xnLurl.InnerText = obj.Config.auto_restart ? "开" : "关";
                             xnLurl = xn.SelectSingleNode("开软件启动");
-                            xnLurl.InnerText = obj.open_start ? "开" : "关";
+                            xnLurl.InnerText = obj.Config.open_start ? "开" : "关";
                             xnLurl = xn.SelectSingleNode("最大内存");
-                            xnLurl.InnerText = obj.max_m.ToString();
+                            xnLurl.InnerText = obj.Config.max_m.ToString();
                             xnLurl = xn.SelectSingleNode("最小内存");
-                            xnLurl.InnerText = obj.min_m.ToString();
+                            xnLurl.InnerText = obj.Config.min_m.ToString();
                             xmldoc.Save(path);
                             return;
                         }
@@ -63,34 +63,34 @@ namespace Minecraft_Server_QQ.Config
                 root.AppendChild(Child);
 
                 Text = xmldoc.CreateElement("服务器名字");
-                Text.InnerText = obj.server_name;
+                Text.InnerText = obj.Config.server_name;
                 Child.AppendChild(Text);
                 Text = xmldoc.CreateElement("服务端路径");
-                Text.InnerText = obj.server_local;
+                Text.InnerText = obj.Config.server_local;
                 Child.AppendChild(Text);
                 Text = xmldoc.CreateElement("服务端核心");
-                Text.InnerText = obj.server_core;
+                Text.InnerText = obj.Config.server_core;
                 Child.AppendChild(Text);
                 Text = xmldoc.CreateElement("服务器参数");
-                Text.InnerText = obj.server_arg;
+                Text.InnerText = obj.Config.server_arg;
                 Child.AppendChild(Text);
                 Text = xmldoc.CreateElement("JAVA路径");
-                Text.InnerText = obj.java_local;
+                Text.InnerText = obj.Config.java_local;
                 Child.AppendChild(Text);
                 Text = xmldoc.CreateElement("JAVA参数");
-                Text.InnerText = obj.java_arg;
+                Text.InnerText = obj.Config.java_arg;
                 Child.AppendChild(Text);
                 Text = xmldoc.CreateElement("自动重启");
-                Text.InnerText = obj.auto_restart ? "开" : "关";
+                Text.InnerText = obj.Config.auto_restart ? "开" : "关";
                 Child.AppendChild(Text);
                 Text = xmldoc.CreateElement("开软件启动");
-                Text.InnerText = obj.open_start ? "开" : "关";
+                Text.InnerText = obj.Config.open_start ? "开" : "关";
                 Child.AppendChild(Text);
                 Text = xmldoc.CreateElement("最大内存");
-                Text.InnerText = obj.max_m.ToString();
+                Text.InnerText = obj.Config.max_m.ToString();
                 Child.AppendChild(Text);
                 Text = xmldoc.CreateElement("最小内存");
-                Text.InnerText = obj.min_m.ToString();
+                Text.InnerText = obj.Config.min_m.ToString();
                 Child.AppendChild(Text);
 
                 xmldoc.Save(path);
@@ -110,7 +110,7 @@ namespace Minecraft_Server_QQ.Config
         /// </summary>
         /// <param name="path">文件(包含路径)</param>
         /// <param name="obj">服务器储存</param>
-        public static void delete_server(string path, Config_class obj)
+        public static void delete_server(string path, Server_Save obj)
         {
             if (File.Exists(path) == false)
                 XML.CreateFile(path, 0);
@@ -126,7 +126,7 @@ namespace Minecraft_Server_QQ.Config
                     if (xn.Name == "服务器列表")
                     {
                         XmlNode xnLurl = xn.SelectSingleNode("服务器名字");
-                        if (xnLurl.InnerText == obj.server_name)
+                        if (xnLurl.InnerText == obj.Config.server_name)
                         {
                             XmlNode a = xmldoc.SelectSingleNode("config");
                             a.RemoveChild(xn);

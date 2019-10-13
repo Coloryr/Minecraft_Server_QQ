@@ -2,6 +2,7 @@
 using System.Threading;
 using System.IO;
 using System.Threading.Tasks;
+using Minecraft_Server_QQ.Config;
 
 namespace Minecraft_Server_QQ
 {
@@ -20,14 +21,11 @@ namespace Minecraft_Server_QQ
         public delegate void pTask(int s);
         private Thread thread;
         private string taskDir;
-        private string Dir;
-        private MCServer Server;
+        private Server_Save Server;
         public event pTask ptask;
-        public MCSTask(MCServer server, string Dir)
+        public MCSTask(Server_Save server)
         {
             this.Server = server;//用于后续计划任务实现
-            this.Dir = Dir;
-            this.taskDir = Dir + @"\Task\";
         }
         //初始化任务(把所有任务剩余计时改成循环周期时间)
         public void InitTask()

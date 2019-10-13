@@ -1,8 +1,11 @@
-﻿using Minecraft_Server_QQ.Utils;
+﻿using Minecraft_Server_QQ.Config;
+using Minecraft_Server_QQ.Utils;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Minecraft_Server_QQ
 {
@@ -10,17 +13,19 @@ namespace Minecraft_Server_QQ
     class MCServer
     {
         public delegate void serverEventHandler(object sender, Event.MCSEvent e);
+
         public event serverEventHandler serverMessage;//回显文本事件
         public event serverEventHandler serverStop;   //服务器关闭通知
         public event serverEventHandler serverRestart;//服务器重启事件
-        private string fileDir;//决定服务端运行在那个目录
-        private string javaPath;//java.exe路径
-        private Process ps;//进程
-        private string cmd;//命令行，保存重启用
+
+        private Server_Save Config;                //服务器配置文件
+
+        private Process ps = new Process();//进程
+
         public int server_now = 0;
-        public MCServer(string fileDir)
+        public MCServer(Server_Save Config)
         {
-            this.fileDir = fileDir;
+            this.Config = Config;
         }
         public bool Run(string javaPath, string cmd)
         {
@@ -33,7 +38,7 @@ namespace Minecraft_Server_QQ
             info.RedirectStandardError = true;
             info.RedirectStandardInput = true;
             info.RedirectStandardOutput = true;
-            info.WorkingDirectory = fileDir;
+            info.WorkingDirectory = Config.server_local;
             info.CreateNoWindow = true;
             try
             {
@@ -48,8 +53,6 @@ namespace Minecraft_Server_QQ
             }
             //进程启动成功，则创建监控线程
             Task_run();
-            this.cmd = cmd;
-            this.javaPath = javaPath;
             return true;
         }//根据命令行启动进程
 
@@ -83,14 +86,12 @@ namespace Minecraft_Server_QQ
                 Thread.Sleep(10);
             });
         }
-        public bool Stop()
+        public void Stop()
         {
-            if (server_now == 0)
-                return false;
+            if (ps.HasExited)
             SendMessage("stop");
             SendMessage("end");
-            return true;
-        }//发送stop指令来终止服务端
+        }
         public bool Close()
         {
             if (IsProcessRun())
@@ -99,15 +100,13 @@ namespace Minecraft_Server_QQ
                 return true;
             }
             return false;
-        }//强制关闭进程
+        }
         public bool Restart()
         {
             if (server_now == 0)
                 return false;
-            //为了保证不卡，重启采用线程执行，重启完毕后将通过事件通知
             Task.Factory.StartNew(() =>
             {
-                //首先屏蔽事件。重启不需要事件。
                 serverEventHandler tmp = this.serverStop;
                 this.serverStop = null;
                 Stop();
@@ -123,24 +122,65 @@ namespace Minecraft_Server_QQ
                 serverRestart?.Invoke(this, new Event.MCSEvent(null, 0));
             });
             return true;
-        }//重启服务端(不触发服务器关闭事件)
+        }
         public int IsRun()
         {
             return server_now;
-        }//返回服务端是否在运行(非进程)
-        public bool IsProcessRun()
-        {
-            if (ps == null)
-                return false;
-            return true;
-        }//返回进程是否在运行
+        }
         public bool SendMessage(string cmd)
         {
             if (!IsProcessRun())
                 return false;
             ps.StandardInput.WriteLine(cmd);
             return true;
-        }//发送命令行给服务端
+        }
+
+        public bool IsProcessRun()
+        {
+            return ps.HasExited;
+        }
+        public void Start_Server()
+        {
+            if (!File.Exists(server_save.server_local + server_save.server_core))
+            {
+                MessageBox.Show("服务器核心未找到，请设置服务器核心");
+                return;
+            }
+            string javaPath = server_save.java_local;
+            if (string.IsNullOrWhiteSpace(javaPath) || !File.Exists(javaPath))
+            {
+                MessageBox.Show("JAVA错误，请重新设置");
+                return;
+            }
+
+            Config_properties config = new Config_properties();
+
+            if (server_save.max_m == 0 || server_save.min_m == 0)
+            {
+                MessageBox.Show("内存设置错误");
+                return;
+            }
+            string cmd = string.Format("{0} -Xmx{1}M -Xms{2}M -Djline.terminal=jline.UnsupportedTerminal -jar \"{3}\" {4}",
+                server_save.java_arg, server_save.max_m.ToString(), server_save.min_m.ToString(),
+                server_save.server_local + server_save.server_core, server_save.server_arg);
+
+            if (!server_save.Server.Run(javaPath, cmd))
+            {
+                MessageBox.Show("进程创建失败！");
+                return;
+            }
+
+            logs.Log_write("启动服务器：" + cmd);
+
+            button_serverRun.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverRun, false });
+            button_serverStop.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverStop, true });
+            button_serverRest.Invoke(new MCServer_API.opEventHandler(safe_opButton), new object[] { button_serverRest, true });
+        }
+
+        public void Stop_Server()
+        {
+            server_save.Server.Stop();
+        }
     }
 }
 
